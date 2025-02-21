@@ -1,4 +1,5 @@
 "use client";
+import Footer from "@/components/global/Footer";
 import Header from "@/components/global/Header";
 import TopHeader from "@/components/global/TopHeader";
 import React, { useEffect, useState } from "react";
@@ -33,6 +34,7 @@ const MainPageTemplate = ({ children }) => {
             {" "}
             {children}
           </div>
+          <Footer />
         </div>
       )}
     </>

@@ -13,6 +13,7 @@ export default {
         foreground: "var(--foreground)",
         "custom-green": "#1C5E20",
         "custom-gold": "#E59434",
+        "custom-darkgold": "#7F521D",
         "custom-darkgreen": "#00292A",
         "custom-light-gray": "#F1F1F1",
         "custom-gray": "#888888",

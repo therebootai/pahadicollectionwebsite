@@ -1,7 +1,10 @@
+import DisscussSection from "@/components/home/DisscussSection";
 import HomeMainSlider from "@/components/home/HomeMainSlider";
 import HomeProductSection from "@/components/home/HomeProductSection";
+import ReviewSection from "@/components/home/ReviewSection";
 import ShopByCategory from "@/components/home/ShopByCategory";
 import SpecialSection from "@/components/home/SpecialSection";
+import ThinkToBuySection from "@/components/home/ThinkToBuySection";
 import TopCategories from "@/components/home/TopCategories";
 import { fetchCategoryData } from "@/serverSide/FetchCategory";
 import { fetchSliderData } from "@/serverSide/HomeMainSlider";
@@ -15,6 +18,9 @@ export default function Home({ sliders, categories }) {
       <TopCategories categories={categories} />
       <HomeProductSection />
       <ShopByCategory categories={categories} />
+      <ThinkToBuySection />
+      <ReviewSection />
+      <DisscussSection />
     </MainPageTemplate>
   );
 }
