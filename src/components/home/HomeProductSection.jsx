@@ -3,6 +3,7 @@ import HeadingComponent from "../global/HeadingComponent";
 import useElementHeight from "@/hooks/useElementHeight";
 import ProductDesignCard from "../card/ProductDesignCard";
 import Image from "next/image";
+import Link from "next/link";
 
 const HomeProductSection = () => {
   const [rightSideHeight, leftSideRef] = useElementHeight();
@@ -110,7 +111,7 @@ const HomeProductSection = () => {
           className="xlg:w-[85%] lg:w-[80%] w-full grid grid-cols-2 md:grid-cols-3 xlg:grid-cols-4 gap-3 xlg:gap-5"
         >
           {products.map((item, index) => (
-            <div key={index} className="h-fit relative">
+            <Link href={"/products/1"} key={index} className="h-fit relative">
               <ProductDesignCard
                 productimg={item.productimg}
                 producthoverimg={item.producthoverimg}
@@ -119,7 +120,7 @@ const HomeProductSection = () => {
                 productprice={item.productprice}
                 productMRP={item.productMRP}
               />
-            </div>
+            </Link>
           ))}
         </div>
       </div>

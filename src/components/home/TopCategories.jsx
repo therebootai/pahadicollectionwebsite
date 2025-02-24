@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeadingComponent from "../global/HeadingComponent";
 import Slider from "react-slick";
 import CategoryCard from "../card/CategoryCard";
+import Link from "next/link";
 
 const TopCategories = ({ categories }) => {
   const [slidesToShow, setSlidesToShow] = useState(5);
@@ -63,12 +64,12 @@ const TopCategories = ({ categories }) => {
         <Slider {...settings}>
           {categories.map((item, index) => (
             <div key={index} className="!flex justify-center items-center">
-              <div className="w-[95%]">
+              <Link href={`/products?${item.mainCategory}`} className="w-[95%]">
                 <CategoryCard
                   categoryname={item.mainCategory}
                   imgsrc={item.categoryImage.secure_url}
                 />
-              </div>
+              </Link>
             </div>
           ))}
         </Slider>

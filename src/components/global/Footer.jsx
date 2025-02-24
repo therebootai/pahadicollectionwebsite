@@ -142,12 +142,12 @@ const Footer = () => {
             ))}
           </div>
         </div>
-        <div className="w-full h-[1.2rem] relative">
+        <div className="w-full h-[0.6rem] md:h-[1.2rem] relative">
           <Image
             src={"/images/footerborder.png"}
             alt=""
             fill
-            className=" w-full"
+            className=" w-full object-cover lg:object-fill"
           />
         </div>
         <div className=" pt-6 flex lg:flex-row flex-col justify-between items-center text-white">

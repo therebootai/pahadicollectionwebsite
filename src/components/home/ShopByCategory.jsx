@@ -31,7 +31,7 @@ const ShopByCategory = ({ categories }) => {
           {categories.map((item, index) => (
             <div key={index} className="h-full">
               <ShopByCategoryCard
-                categoryLink={"/"}
+                categoryLink={`/products?${item.mainCategory}`}
                 categoryimg={item.categoryImage.secure_url}
                 catgeoryName={item.mainCategory}
               />
