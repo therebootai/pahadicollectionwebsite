@@ -59,7 +59,7 @@ const Header = () => {
     {
       text: "Products",
 
-      href: "",
+      href: "/products",
     },
     {
       text: "Blogs",
