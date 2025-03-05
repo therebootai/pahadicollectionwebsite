@@ -1,11 +1,14 @@
+import SubPageBanner from "@/components/global/SubPageBanner";
 import ProductDetailsPage from "@/components/productpage/ProductDetailsPage";
+import MainPageTemplate from "@/templates/MainPageTemplate";
 import React from "react";
 
 const SingleProductPage = () => {
   return (
-    <div>
+    <MainPageTemplate metaData={{ title: "Product", description: "Product" }}>
+      <SubPageBanner subbanner={"/images/subbanner.jpg"} />
       <ProductDetailsPage />
-    </div>
+    </MainPageTemplate>
   );
 };
 

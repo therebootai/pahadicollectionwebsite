@@ -2,9 +2,10 @@
 import Footer from "@/components/global/Footer";
 import Header from "@/components/global/Header";
 import TopHeader from "@/components/global/TopHeader";
+import Head from "next/head";
 import React, { useEffect, useState } from "react";
 
-const MainPageTemplate = ({ children }) => {
+const MainPageTemplate = ({ children, metaData }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -19,8 +20,14 @@ const MainPageTemplate = ({ children }) => {
     }
   }, []);
 
+  const { title = "Home", description = "Home" } = metaData;
+
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Head>
       {isLoading && ""}
       {!isLoading && (
         <div className="flex w-full h-full flex-col overflow-x-hidden">

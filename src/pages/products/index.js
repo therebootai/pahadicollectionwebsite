@@ -2,7 +2,7 @@ import ProductDesignCard from "@/components/card/ProductDesignCard";
 import SubPageBanner from "@/components/global/SubPageBanner";
 import CategorySlider from "@/components/productpage/CategorySlider";
 import FilterSection from "@/components/productpage/FilterSection";
-import { fetchCategoryData } from "@/serverSide/FetchCategory";
+import { fetchCategoryData } from "@/actions/FetchCategory";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import Link from "next/link";
 import React from "react";
@@ -19,7 +19,7 @@ const Products = ({ categories }) => {
     },
   ];
   return (
-    <MainPageTemplate>
+    <MainPageTemplate metaData={{ title: "Products", description: "Products" }}>
       <SubPageBanner subbanner={"/images/subbanner.jpg"} />
       <div className="xl:p-16 lg:p-8 p-4 flex flex-col gap-6 lg:gap-8">
         <CategorySlider categories={categories} />

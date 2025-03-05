@@ -1,11 +1,8 @@
-import axios from "axios";
+import axiosFetch from "@/config/axios.config";
 
 export const fetchCategoryData = async () => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   try {
-    const response = await axios.get(
-      `${backendUrl}/category/get?isActive=true`
-    );
+    const response = await axiosFetch.get(`/category/get?isActive=true`);
     return response.data.categories || [];
   } catch (error) {
     console.error("Error fetching Category data:", error.message);

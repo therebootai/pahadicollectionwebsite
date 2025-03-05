@@ -9,6 +9,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaRegHeart } from "react-icons/fa";
 import { MdAddShoppingCart } from "react-icons/md";
 import axios from "axios";
+import axiosFetch from "@/config/axios.config";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,11 +23,10 @@ const Header = () => {
 
   const toggleAppointmentModal = () =>
     setIsAppointmentModalOpen(!isAppointmentModalOpen);
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const fetchLogo = async () => {
     try {
-      const response = await axios.get(
-        `${backendUrl}/component/get?type=logo&status=true&limit=1`
+      const response = await axiosFetch.get(
+        `/component/get?type=logo&status=true&limit=1`
       );
       console.log("Fetched logo data:", response.data);
 
@@ -176,9 +176,25 @@ const Header = () => {
           <button>
             <IoSearch />
           </button>
-          <button>
-            <CgProfile />
-          </button>
+          <div className="relative group inline-flex items-center justify-center">
+            <button type="button" className="">
+              <CgProfile />
+            </button>
+            <div className="absolute top-full py-4 px-5 bg-white  left-1/2 -translate-x-1/2 duration-500 transition-all origin-top-right opacity-0 group-hover:opacity-100 overflow-hidden hidden group-hover:flex rounded gap-4">
+              <Link
+                href="/login"
+                className="bg-custom-darkgreen text-white text-base py-3 w-28 text-center"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="text-custom-darkgreen bg-custom-light-gray text-base py-3 w-28 text-center"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
           <button>
             <FaRegHeart />
           </button>

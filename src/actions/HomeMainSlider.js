@@ -1,10 +1,9 @@
-import axios from "axios";
+import axiosFetch from "@/config/axios.config";
 
 export const fetchSliderData = async () => {
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   try {
-    const response = await axios.get(
-      `${backendUrl}/component/get?type=slider&status=true&limit=5`
+    const response = await axiosFetch.get(
+      `/component/get?type=slider&status=true&limit=5`
     );
     return response.data.data || [];
   } catch (error) {

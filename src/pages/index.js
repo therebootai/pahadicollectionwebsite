@@ -6,13 +6,13 @@ import ShopByCategory from "@/components/home/ShopByCategory";
 import SpecialSection from "@/components/home/SpecialSection";
 import ThinkToBuySection from "@/components/home/ThinkToBuySection";
 import TopCategories from "@/components/home/TopCategories";
-import { fetchCategoryData } from "@/serverSide/FetchCategory";
-import { fetchSliderData } from "@/serverSide/HomeMainSlider";
+import { fetchCategoryData } from "@/actions/FetchCategory";
+import { fetchSliderData } from "@/actions/HomeMainSlider";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 
 export default function Home({ sliders, categories }) {
   return (
-    <MainPageTemplate>
+    <MainPageTemplate metaData={{ title: "Home", description: "Home" }}>
       <HomeMainSlider sliders={sliders} />
       <SpecialSection />
       <TopCategories categories={categories} />

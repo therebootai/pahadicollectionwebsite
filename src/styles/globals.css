@@ -9,49 +9,87 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide scrollbar but keep scrolling */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
-}
-
-.buttonshinehover {
-  position: relative;
-  overflow: hidden; /* Ensures the shine effect stays within the button */
-}
-.buttonshinehover::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -150px;
-  width: 100px;
-  height: 100%;
-  background-image: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 30%,
-    rgba(255, 255, 255, 0.908) 50%,
-    rgba(255, 255, 255, 0) 70%
-  );
-
-  opacity: 0;
-  transform: skewX(-20deg);
-  transition: opacity 0.3s ease-in-out;
-}
-
-.buttonshinehover:hover::before {
-  opacity: 0.6;
-  animation: shine 2s ease-out infinite;
-}
-
-@keyframes shine {
-  0% {
-    left: -150px; /* Start outside */
+@layer base {
+  input {
+    @apply outline-none border border-[#dddddd] rounded-sm;
   }
-  100% {
-    left: 100%; /* Move completely across */
+}
+
+@layer utilities {
+  .loader {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid #fff;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+  .loader::after {
+    content: "";
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    border-bottom: 4px solid #E59434;
+    border-left: 4px solid transparent;
+  }
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  /* Hide scrollbar but keep scrolling */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+  }
+
+  .buttonshinehover {
+    position: relative;
+    overflow: hidden; /* Ensures the shine effect stays within the button */
+  }
+  .buttonshinehover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150px;
+    width: 100px;
+    height: 100%;
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.908) 50%,
+      rgba(255, 255, 255, 0) 70%
+    );
+
+    opacity: 0;
+    transform: skewX(-20deg);
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .buttonshinehover:hover::before {
+    opacity: 0.6;
+    animation: shine 2s ease-out infinite;
+  }
+
+  @keyframes shine {
+    0% {
+      left: -150px; /* Start outside */
+    }
+    100% {
+      left: 100%; /* Move completely across */
+    }
   }
 }
