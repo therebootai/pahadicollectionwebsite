@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { IoClose, IoCloseSharp, IoSearch } from "react-icons/io5";
+import { IoClose, IoCloseSharp, IoLogOut, IoSearch } from "react-icons/io5";
 import { useRouter } from "next/router";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaRegHeart } from "react-icons/fa";
-import { MdAddShoppingCart } from "react-icons/md";
-import axios from "axios";
+import { MdAddShoppingCart, MdFolderShared } from "react-icons/md";
+import axiosFetch from "@/config/axios.config";
+import { AuthContext } from "@/context/AuthContext";
+import { HiArchiveBox } from "react-icons/hi2";
+import { FaUser } from "react-icons/fa6";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,13 +23,14 @@ const Header = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [logo, setLogo] = useState();
 
+  const { user } = useContext(AuthContext);
+
   const toggleAppointmentModal = () =>
     setIsAppointmentModalOpen(!isAppointmentModalOpen);
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
   const fetchLogo = async () => {
     try {
-      const response = await axios.get(
-        `${backendUrl}/component/get?type=logo&status=true&limit=1`
+      const response = await axiosFetch.get(
+        `/component/get?type=logo&status=true&limit=1`
       );
       console.log("Fetched logo data:", response.data);
 
@@ -176,9 +180,81 @@ const Header = () => {
           <button>
             <IoSearch />
           </button>
-          <button>
-            <CgProfile />
-          </button>
+          <div className="relative group inline-flex items-center justify-center">
+            {user ? (
+              user.profileImage ? (
+                <Image
+                  src={user.profileImage.secure_url}
+                  alt="profile"
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-custom-darkgreen text-custom-gold flex items-center justify-center">
+                  {user.name.slice(0, 1).toUpperCase()}
+                </div>
+              )
+            ) : (
+              <button type="button" className="">
+                <CgProfile />
+              </button>
+            )}
+            <div className="absolute top-full py-4  bg-white  left-1/2 -translate-x-1/2 duration-500 transition-all origin-top-right opacity-0 group-hover:opacity-100 overflow-hidden hidden group-hover:block rounded">
+              {user ? (
+                <div className="flex flex-col">
+                  <div className="flex flex-col mx-4">
+                    <h1 className="text-xl text-custom-darkgreen">
+                      {user.name}
+                    </h1>
+                  </div>
+                  <Link
+                    href={"/my-orders"}
+                    className="text-custom-darkgreen inline-flex gap-4 items-center py-2 bg-custom-light-gray px-5 text-sm xlg:text-base border-b border-[#ccc]"
+                  >
+                    <HiArchiveBox className="shrink-0" />
+                    <span className="whitespace-nowrap">My orders</span>
+                  </Link>
+                  <Link
+                    href={"/my-profile"}
+                    className="text-custom-darkgreen inline-flex gap-4 items-center py-2 bg-custom-light-gray px-5 text-sm xlg:text-base border-b border-[#ccc]"
+                  >
+                    <FaUser className="shrink-0" />
+                    <span className="whitespace-nowrap">Account Settings</span>
+                  </Link>
+                  <Link
+                    href={"/my-reviews"}
+                    className="text-custom-darkgreen inline-flex gap-4 items-center py-2 bg-custom-light-gray px-5 text-sm xlg:text-base border-b border-[#ccc]"
+                  >
+                    <MdFolderShared className="shrink-0" />
+                    <span className="whitespace-nowrap">My Interactions</span>
+                  </Link>
+                  <button
+                    type="button"
+                    className="text-custom-darkgreen inline-flex gap-4 items-center py-2 bg-custom-light-gray px-5 text-sm xlg:text-base border-b border-[#ccc]"
+                  >
+                    <IoLogOut className="shrink-0" />
+                    <span className="whitespace-nowrap">Log Out</span>
+                  </button>
+                </div>
+              ) : (
+                <div className="flex gap-4 mx-5">
+                  <Link
+                    href="/login"
+                    className="bg-custom-darkgreen text-white text-base py-3 w-28 text-center"
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    href="/signup"
+                    className="text-custom-darkgreen bg-custom-light-gray text-base py-3 w-28 text-center"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
           <button>
             <FaRegHeart />
           </button>
