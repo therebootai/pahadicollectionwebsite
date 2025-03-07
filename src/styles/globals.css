@@ -35,7 +35,7 @@
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 50%;
-    border-bottom: 4px solid #E59434;
+    border-bottom: 4px solid #e59434;
     border-left: 4px solid transparent;
   }
   @keyframes rotation {
@@ -91,5 +91,12 @@
     100% {
       left: 100%; /* Move completely across */
     }
+  }
+
+  .gradient-text {
+    background: linear-gradient(90deg, #7f521d 0%, #e59434 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }

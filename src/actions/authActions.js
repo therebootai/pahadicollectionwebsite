@@ -31,3 +31,13 @@ export async function signupCustomer(customer) {
     return error;
   }
 }
+
+export async function logoutCustomer() {
+  try {
+    const response = await axiosFetch.post(`/customers/logout`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
