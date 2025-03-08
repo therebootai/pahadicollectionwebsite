@@ -2,6 +2,7 @@ import { loginCustomer } from "@/actions/authActions";
 import { AuthContext } from "@/context/AuthContext";
 import MiniLoader from "@/ui/MiniLoader";
 import { useActionState, useContext } from "react";
+import { toast } from "react-toastify";
 
 export default function LoginForm() {
   const { login } = useContext(AuthContext);
@@ -12,14 +13,20 @@ export default function LoginForm() {
 
     try {
       const customer = await loginCustomer(email_or_phone, password);
-      console.log(customer);
+      if (customer.response) {
+        throw new Error(customer.response.data.message);
+      }
+      toast.success("Logged in successfully");
       login(customer);
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
+      return { ...prevState };
     }
   };
 
   const [_state, formAction, isPending] = useActionState(handleLogin, null);
+
   return (
     <form
       action={formAction}

@@ -1,6 +1,8 @@
 import { signupCustomer } from "@/actions/authActions";
 import { AuthContext } from "@/context/AuthContext";
+import MiniLoader from "@/ui/MiniLoader";
 import { useActionState, useContext } from "react";
+import { toast } from "react-toastify";
 
 export default function SignUpForm() {
   const { login } = useContext(AuthContext);
@@ -39,9 +41,15 @@ export default function SignUpForm() {
         password,
         address,
       });
+      if (customer.response) {
+        throw new Error(customer.response.data.message);
+      }
+      toast.success("Account created successfully");
       login(customer);
     } catch (error) {
       console.log(error);
+      toast.error(error.message);
+      return { ...prevState };
     }
   };
 

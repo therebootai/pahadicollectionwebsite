@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiSolidEditAlt } from "react-icons/bi";
+import { IoClose } from "react-icons/io5";
 
 export default function InputWithLabel({ label, inputProps }) {
   const [startEditing, setStartEditing] = useState(false);
@@ -20,6 +21,16 @@ export default function InputWithLabel({ label, inputProps }) {
           <BiSolidEditAlt />
           Edit
         </button>
+        {startEditing && (
+          <button
+            type="button"
+            className="text-xs capitalize inline-flex gap-1 bg-red-600 text-white items-center px-3 py-1 rounded-sm"
+            onClick={() => setStartEditing(false)}
+          >
+            <IoClose />
+            Close
+          </button>
+        )}
       </div>
       <input
         {...inputProps}

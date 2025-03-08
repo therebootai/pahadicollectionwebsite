@@ -12,6 +12,8 @@ import axiosFetch from "@/config/axios.config";
 import { AuthContext } from "@/context/AuthContext";
 import { HiArchiveBox } from "react-icons/hi2";
 import { FaUser } from "react-icons/fa6";
+import { logoutCustomer } from "@/actions/authActions";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +25,7 @@ const Header = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [logo, setLogo] = useState();
 
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   const toggleAppointmentModal = () =>
     setIsAppointmentModalOpen(!isAppointmentModalOpen);
@@ -94,6 +96,16 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  async function handleLogout() {
+    try {
+      await logoutCustomer();
+      toast.success("You successfully logged out.");
+      logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast.error("Logout failed. Please try again.");
+    }
+  }
   return (
     <>
       <div
@@ -232,6 +244,7 @@ const Header = () => {
                   <button
                     type="button"
                     className="text-custom-darkgreen inline-flex gap-4 items-center py-2 bg-custom-light-gray px-5 text-sm xlg:text-base border-b border-[#ccc]"
+                    onClick={handleLogout}
                   >
                     <IoLogOut className="shrink-0" />
                     <span className="whitespace-nowrap">Log Out</span>

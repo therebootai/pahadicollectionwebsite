@@ -34,7 +34,7 @@ export async function signupCustomer(customer) {
 
 export async function logoutCustomer() {
   try {
-    const response = await axiosFetch.post(`/customers/logout`);
+    const response = await axiosFetch.get(`/customers/logout`);
     return response.data;
   } catch (error) {
     console.log(error);
