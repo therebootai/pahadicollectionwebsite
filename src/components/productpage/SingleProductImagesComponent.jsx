@@ -97,7 +97,10 @@ const SinglePageImagesComponent = ({ images }) => {
           {images
             .slice(thumbIndex, thumbIndex + thumbnailsToShow)
             .map((image, index) => (
-              <div className="size-[4rem] lg:size-[4rem] xl:size-[5rem]  relative ">
+              <div
+                className="size-[4rem] lg:size-[4rem] xl:size-[5rem]  relative "
+                key={index}
+              >
                 <Image
                   key={thumbIndex + index}
                   src={image}
