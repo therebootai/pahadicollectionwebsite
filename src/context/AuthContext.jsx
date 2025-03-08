@@ -52,7 +52,6 @@ const AuthContextProvider = ({ children }) => {
   // Logout function
   const logout = () => {
     dispatch({ type: "LOGOUT" });
-    navigate("/login");
   };
 
   return (
