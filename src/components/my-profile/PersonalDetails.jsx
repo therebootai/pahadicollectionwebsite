@@ -33,6 +33,13 @@ export default function PersonalDetails() {
           }}
         />
       )}
+      <InputWithLabel
+        label="Your Password"
+        inputProps={{
+          type: "password",
+          placeholder: "Enter your new password",
+        }}
+      />
       <div className="flex items-center justify-start gap-6">
         <button
           type="button"
