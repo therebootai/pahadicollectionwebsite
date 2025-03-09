@@ -42,13 +42,71 @@ export default function AddAndEditAddress({ address = null }) {
             type="text"
           />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 flex">
           <input
             className="p-6 flex-1 rounded-sm border border-[#ddd] text-custom-gray"
-            placeholder=" House Number"
-            type="number"
+            placeholder=" Remarks"
+            type="text"
             required
           />
+        </div>
+        <div className="flex gap-6">
+          <div className="flex items-center gap-3">
+            <input
+              type="radio"
+              name="addressType"
+              id="home"
+              className="appearance-none checked:accent-white checked:ring-custom-gold size-4 rounded-full ring-4 ring-custom-gray"
+            />
+            <label
+              htmlFor="home"
+              className="text-custom-gray xlg:text-lg text-base cursor-pointer"
+            >
+              Home
+            </label>
+          </div>
+          <div className="flex items-center gap-3">
+            <input
+              type="radio"
+              name="addressType"
+              id="office"
+              className="appearance-none checked:accent-white checked:ring-custom-gold size-4 rounded-full ring-4 ring-custom-gray"
+            />
+            <label
+              htmlFor="office"
+              className="text-custom-gray xlg:text-lg text-base cursor-pointer"
+            >
+              Office
+            </label>
+          </div>
+          <div className="flex items-center gap-3">
+            <input
+              type="radio"
+              name="addressType"
+              id="others"
+              className="appearance-none checked:accent-white checked:ring-custom-gold size-4 rounded-full ring-4 ring-custom-gray"
+            />
+            <label
+              htmlFor="others"
+              className="text-custom-gray xlg:text-lg text-base cursor-pointer"
+            >
+              Others
+            </label>
+          </div>
+        </div>
+        <div className="flex items-center justify-start gap-6">
+          <button
+            type="button"
+            className="text-white inline-flex py-3 px-5 text-xs bg-custom-darkgreen"
+          >
+            Save Address
+          </button>
+          <button
+            type="button"
+            className="text-custom-darkgreen inline-flex py-3 px-5 text-xs bg-[#ddd]"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

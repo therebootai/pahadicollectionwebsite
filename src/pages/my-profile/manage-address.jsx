@@ -1,4 +1,5 @@
 import AddAndEditAddress from "@/components/my-profile/mange-address/AddAndEditAddress";
+import AddressesList from "@/components/my-profile/mange-address/AddressesList";
 import ProfileSideBar from "@/components/my-profile/ProfileSideBar";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import Breadcumb from "@/ui/Breadcumb";
@@ -20,6 +21,7 @@ export default function ManageAddress() {
               Add New Address
             </button>
             <AddAndEditAddress />
+            <AddressesList />
           </div>
         </div>
       </div>
