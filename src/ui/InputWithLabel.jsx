@@ -8,6 +8,7 @@ export default function InputWithLabel({ label, inputProps, saveEvent }) {
 
   const handelSave = (prevState, formState) => {
     const currentUpdate = formState.get(inputProps.name);
+    saveEvent({ [inputProps.name]: currentUpdate });
     console.log(currentUpdate);
     return { ...prevState };
   };
