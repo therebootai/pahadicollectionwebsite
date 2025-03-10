@@ -64,7 +64,12 @@ const TopCategories = ({ categories }) => {
         <Slider {...settings}>
           {categories.map((item, index) => (
             <div key={index} className="!flex justify-center items-center">
-              <Link href={`/products?${item.mainCategory}`} className="w-[95%]">
+              <Link
+                href={`/products?category=${encodeURIComponent(
+                  item.mainCategory
+                )}`}
+                className="w-[95%]"
+              >
                 <CategoryCard
                   categoryname={item.mainCategory}
                   imgsrc={item.categoryImage.secure_url}

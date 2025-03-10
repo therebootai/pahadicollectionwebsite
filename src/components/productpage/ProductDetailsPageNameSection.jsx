@@ -11,7 +11,7 @@ import { FaRegHeart } from "react-icons/fa6";
 import { IoMdRadioButtonOn } from "react-icons/io";
 import { IoStar, IoStarHalfOutline, IoStarOutline } from "react-icons/io5";
 
-const ProductDetailsPageNameSection = () => {
+const ProductDetailsPageNameSection = ({ title, mrp, price, discount }) => {
   const benifits = [
     {
       icon: <FreeShiping className={"size-4 lg:size-5"} />,
@@ -41,17 +41,18 @@ const ProductDetailsPageNameSection = () => {
   return (
     <div className=" flex flex-col gap-4  ">
       <h1 className="xlg:text-3xl md:text-2xl text-xl font-semibold text-custom-darkgreen ">
-        14KT Yellow Gold Gorgeous Necklace...
+        {title}
       </h1>
       <div className=" flex items-center gap-2 md:gap-4">
         <div className="  h-[2.5rem] md:h-[3rem] w-[8rem] md:w-[10rem] flex justify-center items-center bg-custom-light-gray  text-custom-gray rounded-sm text-sm ">
-          MRP <span className=" line-through ml-1 md:ml-2"> &#8377; 1299 </span>
+          MRP{" "}
+          <span className=" line-through ml-1 md:ml-2"> &#8377; {mrp} </span>
         </div>
-        <div className=" h-[2.5rem] md:h-[3rem] w-[8rem] md:w-[10rem] flex justify-center items-center bg-custom-light-gray  text-custom-darkgreen rounded-sm md:text-lg text-base ">
-          Price &#8377; 1000
+        <div className=" h-[2.5rem] md:h-[3rem] w-fit md:px-5 xlg:px-6 xl:px-8 px-4  flex justify-center items-center bg-custom-light-gray  text-custom-darkgreen rounded-sm md:text-lg text-base ">
+          Price &#8377; {price}
         </div>
         <div className=" h-[2.5rem] md:h-[3rem] w-[4rem] md:w-[6rem] flex justify-center items-center bg-[#00B368]  text-white rounded-full text-sm md:text-lg ">
-          5% Off
+          {discount}% Off
         </div>
       </div>
       <div className=" flex items-center gap-2 md:gap-4">

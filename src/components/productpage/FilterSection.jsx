@@ -5,7 +5,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 const FilterSection = ({ categories }) => {
   const router = useRouter();
-  const currentCategory = Object.keys(router.query)[0] || "";
+  const currentCategory = router.query.category || "";
 
   return (
     <div className="flex flex-col border border-[#cccccc] rounded-sm">
@@ -21,7 +21,9 @@ const FilterSection = ({ categories }) => {
             const isActive = currentCategory === item.mainCategory;
             return (
               <Link
-                href={`/products?${encodeURIComponent(item.mainCategory)}`}
+                href={`/products?category=${encodeURIComponent(
+                  item.mainCategory
+                )}`}
                 key={index}
                 className={`text-lg ${
                   isActive

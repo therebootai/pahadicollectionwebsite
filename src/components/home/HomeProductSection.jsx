@@ -5,82 +5,9 @@ import ProductDesignCard from "../card/ProductDesignCard";
 import Image from "next/image";
 import Link from "next/link";
 
-const HomeProductSection = () => {
+const HomeProductSection = ({ products }) => {
   const [rightSideHeight, leftSideRef] = useElementHeight();
-  const products = [
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-    {
-      productimg: "/images/productring.png",
-      producthoverimg: "/images/producthoverimg.png",
-      productname: "14KT Yellow Gold Gorgeous",
-      productprice: "12599",
-      productMRP: "16599",
-      productDiscount: "20",
-    },
-  ];
+
   return (
     <div className="xl:p-16 lg:p-8 p-4 flex flex-col xl:gap-8 gap-6">
       <div className="flex justify-center items-center">
@@ -113,12 +40,12 @@ const HomeProductSection = () => {
           {products.map((item, index) => (
             <Link href={"/products/1"} key={index} className="h-fit relative">
               <ProductDesignCard
-                productimg={item.productimg}
-                producthoverimg={item.producthoverimg}
-                productname={item.productname}
-                productDiscount={item.productDiscount}
-                productprice={item.productprice}
-                productMRP={item.productMRP}
+                productimg={item.thumbnail_image.secure_url}
+                producthoverimg={item.hoverImage.secure_url}
+                productname={item.title}
+                productDiscount={item.discount}
+                productprice={item.price}
+                productMRP={item.mrp}
               />
             </Link>
           ))}

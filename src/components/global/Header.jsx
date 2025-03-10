@@ -34,7 +34,6 @@ const Header = () => {
       const response = await axiosFetch.get(
         `/component/get?type=logo&status=true&limit=1`
       );
-      console.log("Fetched logo data:", response.data);
 
       if (response.data?.data?.length > 0) {
         setLogo(response.data.data[0]); // Set first object in array
