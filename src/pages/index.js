@@ -9,14 +9,15 @@ import TopCategories from "@/components/home/TopCategories";
 import { fetchCategoryData } from "@/actions/FetchCategory";
 import { fetchSliderData } from "@/actions/HomeMainSlider";
 import MainPageTemplate from "@/templates/MainPageTemplate";
+import { fetchProductsData } from "@/actions/FetchProducts";
 
-export default function Home({ sliders, categories }) {
+export default function Home({ sliders, categories, products }) {
   return (
     <MainPageTemplate metaData={{ title: "Home", description: "Home" }}>
       <HomeMainSlider sliders={sliders} />
       <SpecialSection />
       <TopCategories categories={categories} />
-      <HomeProductSection />
+      <HomeProductSection products={products} />
       <ShopByCategory categories={categories} />
       <ThinkToBuySection />
       <ReviewSection />
@@ -28,6 +29,7 @@ export default function Home({ sliders, categories }) {
 export async function getServerSideProps() {
   const sliders = await fetchSliderData();
   const categories = await fetchCategoryData();
+  const initialData = await fetchProductsData(1, 12);
 
-  return { props: { sliders, categories } };
+  return { props: { sliders, categories, products: initialData.products } };
 }

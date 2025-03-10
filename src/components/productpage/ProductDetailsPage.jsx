@@ -9,16 +9,8 @@ import ProductDetailsPageSpecification from "./ProductDetailsPageSpecification";
 import ProductPageDetailsReview from "./ProductPageDetailsReview";
 import OurSimilerProduct from "./OurSimilerProduct";
 
-const ProductDetailsPage = () => {
+const ProductDetailsPage = ({ productImage, price, title, mrp, discount }) => {
   const [activeSection, setActiveSection] = useState("description");
-
-  const images = [
-    "/images/product1.png",
-    "/images/product2.png",
-    "/images/product3.png",
-    "/images/product4.png",
-    "/images/product5.png",
-  ];
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
@@ -28,10 +20,15 @@ const ProductDetailsPage = () => {
     <div className="xl:p-16 lg:p-8 p-4 flex flex-col gap-6 lg:gap-8">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-[45%] w-full relative ">
-          <SinglePageImagesComponent images={images} />
+          <SinglePageImagesComponent images={productImage} />
         </div>
         <div className="lg:w-[55%] w-full relative">
-          <ProductDetailsPageNameSection />
+          <ProductDetailsPageNameSection
+            price={price}
+            title={title}
+            mrp={mrp}
+            discount={discount}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-6">

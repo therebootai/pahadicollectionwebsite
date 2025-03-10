@@ -3,7 +3,7 @@ import React, { useState, useRef } from "react";
 import "tailwindcss/tailwind.css";
 import ImageMagnify from "react-image-magnify";
 
-const SinglePageImagesComponent = ({ images }) => {
+const SinglePageImagesComponent = ({ images = [] }) => {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [thumbIndex, setThumbIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);

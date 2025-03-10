@@ -63,7 +63,9 @@ const CategorySlider = ({ categories }) => {
           >
             <div className=" w-[95%]">
               <ShopByCategoryCard
-                categoryLink={`/products?${item.mainCategory}`}
+                categoryLink={`/products?category=${encodeURIComponent(
+                  item.mainCategory
+                )}`}
                 categoryimg={item.categoryImage.secure_url}
                 catgeoryName={item.mainCategory}
               />
