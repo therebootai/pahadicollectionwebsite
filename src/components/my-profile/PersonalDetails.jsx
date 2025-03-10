@@ -5,12 +5,14 @@ import { useContext } from "react";
 export default function PersonalDetails() {
   const { user } = useContext(AuthContext);
 
+  async function handelInputSubmit() {}
+
   return (
     <div className="flex flex-col gap-8 flex-1">
       {user?.name && (
         <InputWithLabel
           label="Your Name"
-          inputProps={{ type: "text", value: user.name }}
+          inputProps={{ type: "text", defaultValue: user.name, name: "name" }}
         />
       )}
       {user?.mobile && (
@@ -18,9 +20,10 @@ export default function PersonalDetails() {
           label="Your Mobile"
           inputProps={{
             type: "tel",
-            value: user.mobile,
+            defaultValue: user.mobile,
             minLength: 10,
             maxLength: 10,
+            name: "mobile",
           }}
         />
       )}
@@ -29,7 +32,8 @@ export default function PersonalDetails() {
           label="Your Email"
           inputProps={{
             type: "email",
-            value: user.email,
+            defaultValue: user.email,
+            name: "email",
           }}
         />
       )}
@@ -38,6 +42,7 @@ export default function PersonalDetails() {
         inputProps={{
           type: "password",
           placeholder: "Enter your new password",
+          name: "password",
         }}
       />
       <div className="flex items-center justify-start gap-6">

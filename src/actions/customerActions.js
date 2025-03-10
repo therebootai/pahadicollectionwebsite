@@ -1,8 +1,10 @@
 import axiosFetch from "@/config/axios.config";
 
-export async function updateCustomer(customerData) {
+export async function updateCustomer(customerId, customerData) {
   try {
-    const response = await axiosFetch.put(`/customers/`, { ...customerData });
+    const response = await axiosFetch.put(`/customers/${customerId}`, {
+      ...customerData,
+    });
     const { customer } = response.data;
     return customer;
   } catch (error) {
