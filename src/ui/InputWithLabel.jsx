@@ -2,14 +2,14 @@ import { useActionState, useCallback, useState } from "react";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import MiniLoader from "./MiniLoader";
 
 export default function InputWithLabel({ label, inputProps, saveEvent }) {
   const [startEditing, setStartEditing] = useState(false);
 
-  const handelSave = (prevState, formState) => {
+  const handelSave = async (prevState, formState) => {
     const currentUpdate = formState.get(inputProps.name);
-    saveEvent({ [inputProps.name]: currentUpdate });
-    console.log(currentUpdate);
+    await saveEvent({ [inputProps.name]: currentUpdate });
     return { ...prevState };
   };
 
@@ -53,6 +53,7 @@ export default function InputWithLabel({ label, inputProps, saveEvent }) {
             Close
           </button>
         )}
+        {isPending && <MiniLoader />}
       </div>
       <input
         {...inputProps}

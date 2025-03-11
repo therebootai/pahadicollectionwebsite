@@ -2,13 +2,23 @@ import { updateCustomer } from "@/actions/customerActions";
 import { AuthContext } from "@/context/AuthContext";
 import InputWithLabel from "@/ui/InputWithLabel";
 import { useContext } from "react";
+import { toast } from "react-toastify";
 
 export default function PersonalDetails() {
-  const { user } = useContext(AuthContext);
+  const { user, login } = useContext(AuthContext);
 
   async function handelInputSubmit(updatedData) {
-    console.log(updatedData);
-    // await updateCustomer(user._id, { ...updatedData });
+    try {
+      const customer = await updateCustomer(user._id, { ...updatedData });
+      if (customer.response) {
+        throw new Error(customer.response.data.message);
+      }
+      toast.success("Updated Successfully");
+      login(customer);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
   }
 
   return (
@@ -45,7 +55,7 @@ export default function PersonalDetails() {
         />
       )}
       <InputWithLabel
-        label="Your Password"
+        label="Change Your Password"
         inputProps={{
           type: "password",
           placeholder: "Enter your new password",

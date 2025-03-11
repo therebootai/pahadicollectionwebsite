@@ -9,7 +9,14 @@ import ProductDetailsPageSpecification from "./ProductDetailsPageSpecification";
 import ProductPageDetailsReview from "./ProductPageDetailsReview";
 import OurSimilerProduct from "./OurSimilerProduct";
 
-const ProductDetailsPage = ({ productImage, price, title, mrp, discount }) => {
+const ProductDetailsPage = ({
+  productImage,
+  price,
+  title,
+  mrp,
+  discount,
+  slug,
+}) => {
   const [activeSection, setActiveSection] = useState("description");
 
   const handleSectionChange = (section) => {
@@ -28,6 +35,7 @@ const ProductDetailsPage = ({ productImage, price, title, mrp, discount }) => {
             title={title}
             mrp={mrp}
             discount={discount}
+            slug={slug}
           />
         </div>
       </div>
