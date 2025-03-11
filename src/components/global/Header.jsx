@@ -25,7 +25,7 @@ const Header = () => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [logo, setLogo] = useState();
 
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, isAuthenticated } = useContext(AuthContext);
 
   const toggleAppointmentModal = () =>
     setIsAppointmentModalOpen(!isAppointmentModalOpen);
@@ -267,11 +267,23 @@ const Header = () => {
               )}
             </div>
           </div>
-          <Link href={"/my-interaction/my-wishlist"}>
+          <Link
+            href={isAuthenticated ? "/my-interaction/my-wishlist" : "/login"}
+            className="relative"
+          >
             <FaRegHeart />
+            <span className="absolute -top-1/2 left-full text-xs bg-red-600 size-4 rounded-full text-center">
+              {user.wishlist?.length}
+            </span>
           </Link>
-          <Link href={"/my-interaction/my-cart"}>
+          <Link
+            href={isAuthenticated ? "/my-interaction/my-cart" : "/login"}
+            className="relative"
+          >
             <MdAddShoppingCart />
+            <span className="absolute -top-1/2 left-full text-xs bg-red-600 size-4 rounded-full text-center">
+              {user.cart?.length}
+            </span>
           </Link>
         </div>
 

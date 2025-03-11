@@ -21,9 +21,9 @@ export default function ProductPageHeadingIcon({ className }) {
           y2="7.83551"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#7F521D" />
-          <stop offset="0.5" stop-color="#E59434" />
-          <stop offset="1" stop-color="#7F521D" />
+          <stop stopColor="#7F521D" />
+          <stop offset="0.5" stopColor="#E59434" />
+          <stop offset="1" stopColor="#7F521D" />
         </linearGradient>
       </defs>
     </svg>

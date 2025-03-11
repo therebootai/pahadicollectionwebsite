@@ -1,9 +1,19 @@
 import { fetchSingleProductData } from "@/actions/FetchSingleProduct";
 import PlaceOrderSection from "@/components/place-order/PlaceOrderSection";
+import { AuthContext } from "@/context/AuthContext";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import Breadcumb from "@/ui/Breadcumb";
+import { useRouter } from "next/router";
+import { useContext } from "react";
 
 export default function PlaceOrder({ products }) {
+  const { isAuthenticated } = useContext(AuthContext);
+  const router = useRouter();
+
+  if (!isAuthenticated) {
+    router.push("/");
+  }
+
   return (
     <MainPageTemplate
       metaData={{ title: "Place Order", description: "Place Order" }}

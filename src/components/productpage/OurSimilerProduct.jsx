@@ -100,8 +100,11 @@ const OurSimilerProduct = () => {
     <div className="w-full">
       <Slider {...settings}>
         {products.map((item, index) => (
-          <div className=" w-full !flex justify-center items-center outline-none py-4">
-            <div key={index} className="h-fit w-[95%] relative">
+          <div
+            className=" w-full !flex justify-center items-center outline-none py-4"
+            key={index}
+          >
+            <div className="h-fit w-[95%] relative">
               <ProductDesignCard
                 productimg={item.productimg}
                 producthoverimg={item.producthoverimg}

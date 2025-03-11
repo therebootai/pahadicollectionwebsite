@@ -16,6 +16,7 @@ const ProductDetailsPage = ({
   mrp,
   discount,
   slug,
+  productId,
 }) => {
   const [activeSection, setActiveSection] = useState("description");
 
@@ -35,6 +36,7 @@ const ProductDetailsPage = ({
             title={title}
             mrp={mrp}
             discount={discount}
+            productId={productId}
             slug={slug}
           />
         </div>

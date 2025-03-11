@@ -78,9 +78,11 @@ export default function AddAndEditAddress({
     }
   }
 
-  const [_, formAction, isPending] = useActionState(
+  const [formState, formAction, isPending] = useActionState(
     updateCustomerAddress,
-    null
+    {
+      type: editedAddress?.type || "home",
+    }
   );
 
   return (
@@ -155,7 +157,9 @@ export default function AddAndEditAddress({
                 name="type"
                 id={type}
                 className="appearance-none checked:accent-white checked:ring-custom-gold size-4 rounded-full ring-4 ring-custom-gray"
-                defaultChecked={editedAddress?.type === type}
+                value={type}
+                checked={formState.type === type}
+                onChange={(e) => formAction({ type: e.target.value })}
               />
               <label
                 htmlFor={type}
