@@ -272,18 +272,22 @@ const Header = () => {
             className="relative"
           >
             <FaRegHeart />
-            <span className="absolute -top-1/2 left-full text-xs bg-red-600 size-4 rounded-full text-center">
-              {user.wishlist?.length}
-            </span>
+            {user && user.wishlist && user.wishlist.length > 0 && (
+              <span className="absolute -top-1/2 left-full text-xs bg-red-600 size-4 rounded-full text-center">
+                {user?.wishlist?.length}
+              </span>
+            )}
           </Link>
           <Link
             href={isAuthenticated ? "/my-interaction/my-cart" : "/login"}
             className="relative"
           >
             <MdAddShoppingCart />
-            <span className="absolute -top-1/2 left-full text-xs bg-red-600 size-4 rounded-full text-center">
-              {user.cart?.length}
-            </span>
+            {user && user.cart && user.cart.length > 0 && (
+              <span className="absolute -top-1/2 left-full text-xs bg-red-600 size-4 rounded-full text-center">
+                {user?.cart?.length}
+              </span>
+            )}
           </Link>
         </div>
 

@@ -32,6 +32,21 @@ export async function getServerSideProps(req) {
     const productArray = products ? products.split(",") : [];
     let allProducts = [];
 
+    const cookies = req.req.headers.cookie || ""; // Get the cookie string
+    const parsedCookies = Object.fromEntries(
+      cookies.split("; ").map((c) => c.split("="))
+    );
+
+    const token = parsedCookies.token || null;
+    if (!token) {
+      return {
+        redirect: {
+          destination: "/", // Redirect to home
+          permanent: false, // False means it's a temporary redirect
+        },
+      };
+    }
+
     async function fetchAllProducts() {
       for (let i = 0; i < productArray.length; i++) {
         const product = await fetchSingleProductData(productArray[i]);

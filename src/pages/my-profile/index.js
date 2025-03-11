@@ -1,19 +1,9 @@
 import PersonalDetails from "@/components/my-profile/PersonalDetails";
 import ProfileSideBar from "@/components/my-profile/ProfileSideBar";
-import { AuthContext } from "@/context/AuthContext";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import Breadcumb from "@/ui/Breadcumb";
-import { useRouter } from "next/router";
-import { useContext } from "react";
 
-export default function MyProfile() {
-  const { isAuthenticated } = useContext(AuthContext);
-    const router = useRouter();
-  
-    if (!isAuthenticated) {
-      router.push("/");
-    }
-
+export default function MyProfile({ token }) {
   return (
     <MainPageTemplate
       metaData={{ title: "My Profile", description: "My Profile" }}
@@ -27,4 +17,27 @@ export default function MyProfile() {
       </div>
     </MainPageTemplate>
   );
+}
+
+export async function getServerSideProps(context) {
+  try {
+    const cookies = context.req.headers.cookie || ""; // Get the cookie string
+    const parsedCookies = Object.fromEntries(
+      cookies.split("; ").map((c) => c.split("="))
+    );
+
+    const token = parsedCookies.token || null;
+    if (!token) {
+      return {
+        redirect: {
+          destination: "/", // Redirect to home
+          permanent: false, // False means it's a temporary redirect
+        },
+      };
+    }
+    return { props: { token } }; // Passing token to the page for debugging
+  } catch (error) {
+    console.error(error);
+    return { props: {} };
+  }
 }
