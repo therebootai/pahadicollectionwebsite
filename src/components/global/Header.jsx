@@ -234,7 +234,7 @@ const Header = () => {
                     <span className="whitespace-nowrap">Account Settings</span>
                   </Link>
                   <Link
-                    href={"/my-reviews"}
+                    href={"/my-interaction/my-wishlist"}
                     className="text-custom-darkgreen inline-flex gap-4 items-center py-2 bg-custom-light-gray px-5 text-sm xlg:text-base border-b border-[#ccc]"
                   >
                     <MdFolderShared className="shrink-0" />
@@ -267,12 +267,12 @@ const Header = () => {
               )}
             </div>
           </div>
-          <button>
+          <Link href={"/my-interaction/my-wishlist"}>
             <FaRegHeart />
-          </button>
-          <button>
+          </Link>
+          <Link href={"/my-interaction/my-cart"}>
             <MdAddShoppingCart />
-          </button>
+          </Link>
         </div>
 
         {/* Mobile Menu Icon */}
