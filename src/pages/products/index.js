@@ -8,6 +8,7 @@ import MainPageTemplate from "@/templates/MainPageTemplate";
 import Link from "next/link";
 import { fetchProductsData } from "@/actions/FetchProducts";
 import { useRouter } from "next/router";
+import MiniLoader from "@/ui/MiniLoader";
 
 const Products = ({ categories, initialProducts, totalPages }) => {
   const [products, setProducts] = useState(initialProducts);
@@ -79,6 +80,7 @@ const Products = ({ categories, initialProducts, totalPages }) => {
                   className="h-fit relative"
                 >
                   <ProductDesignCard
+                    productId={item._id}
                     productimg={item.thumbnail_image.secure_url}
                     producthoverimg={item.hoverImage.secure_url}
                     productname={item.title}
@@ -90,7 +92,7 @@ const Products = ({ categories, initialProducts, totalPages }) => {
               ))}
 
               <div ref={observerRef} className="col-span-4 text-center py-4">
-                {loading && <span>Loading more products...</span>}
+                {loading && <MiniLoader />}
               </div>
             </div>
           </div>

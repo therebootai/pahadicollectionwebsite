@@ -38,8 +38,13 @@ const HomeProductSection = ({ products }) => {
           className="xlg:w-[85%] lg:w-[80%] w-full grid grid-cols-2 md:grid-cols-3 xlg:grid-cols-4 gap-3 xlg:gap-5"
         >
           {products.map((item, index) => (
-            <Link href={"/products/1"} key={index} className="h-fit relative">
+            <Link
+              href={`/products/${item.slug}`}
+              key={index}
+              className="h-fit relative"
+            >
               <ProductDesignCard
+                productId={item._id}
                 productimg={item.thumbnail_image.secure_url}
                 producthoverimg={item.hoverImage.secure_url}
                 productname={item.title}

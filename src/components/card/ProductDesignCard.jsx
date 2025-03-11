@@ -1,8 +1,13 @@
+import { removeWishlist, updateWishlist } from "@/actions/customerActions";
+import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 const ProductDesignCard = ({
+  productId,
   productimg,
   producthoverimg,
   productname,
@@ -10,6 +15,51 @@ const ProductDesignCard = ({
   productMRP,
   productDiscount,
 }) => {
+  const { user, isAuthenticated, dispatch } = useContext(AuthContext);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    if (user?.wishlist?.some((item) => item._id === productId)) {
+      setIsWishlisted(true);
+    } else {
+      setIsWishlisted(false);
+    }
+  }, [user?.wishlist, productId]);
+
+  const handleWishlist = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!isAuthenticated) {
+      toast.error("You Are not loged in");
+
+      return;
+    }
+
+    try {
+      if (isWishlisted) {
+        const data = await removeWishlist(user.customerId, productId);
+        setIsWishlisted(false);
+
+        dispatch({
+          type: "LOGIN",
+          payload: { ...user, wishlist: data.wishlist },
+        });
+      } else {
+        const data = await updateWishlist(user.customerId, productId);
+        setIsWishlisted(true);
+        toast.success("Wishlist added");
+
+        dispatch({
+          type: "LOGIN",
+          payload: { ...user, wishlist: data.wishlist },
+        });
+      }
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col h-fit rounded shadow-custom-light group overflow-hidden">
       <style jsx>{`
@@ -80,8 +130,11 @@ const ProductDesignCard = ({
           <div className="text-custom-green text-xs md:text-base font-medium">
             {productDiscount}%
           </div>
-          <button className="text-custom-darkgreen text-sm md:text-lg font-medium">
-            <FaRegHeart />
+          <button
+            className="text-custom-darkgreen text-lg"
+            onClick={handleWishlist}
+          >
+            {isWishlisted ? <FaHeart /> : <FaRegHeart />}
           </button>
         </div>
       </div>
