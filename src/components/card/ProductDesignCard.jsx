@@ -121,13 +121,14 @@ const ProductDesignCard = ({
           {productname}
         </h1>
         <div className="flex items-center justify-between">
-          <div className="md:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs md:text-base font-medium flex justify-center items-center px-2 md:px-4 rounded-full">
-            &#8377; {productprice}
+          <div className="lg:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs lg:text-sm xlg:text-base font-medium flex justify-center items-center px-2 lg:px-4 rounded-full">
+            &#8377; {Math.floor(productprice)}
           </div>
-          <div className="text-custom-gray text-xs md:text-base font-medium line-through">
-            &#8377; {productMRP}
+          <div className="text-custom-gray text-xs sm:text-sm xlg:text-base font-medium line-through">
+            &#8377; {Math.floor(productMRP)}
           </div>
-          <div className="text-custom-green text-xs md:text-base font-medium">
+
+          <div className="text-custom-green text-xs lg:text-sm xlg:text-base font-medium">
             {productDiscount}%
           </div>
           <button
