@@ -25,8 +25,8 @@ export default function LiveAssistance({ className }) {
           y2="34"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E59434" />
-          <stop offset="1" stop-color="#7F521D" />
+          <stop stopColor="#E59434" />
+          <stop offset="1" stopColor="#7F521D" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_62_1309"
@@ -36,8 +36,8 @@ export default function LiveAssistance({ className }) {
           y2="26.0315"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E59434" />
-          <stop offset="1" stop-color="#7F521D" />
+          <stop stopColor="#E59434" />
+          <stop offset="1" stopColor="#7F521D" />
         </linearGradient>
       </defs>
     </svg>

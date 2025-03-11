@@ -1,10 +1,11 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProductsList from "./ProductLists";
 import OrderDetailsCard from "@/ui/OrderDetailsCard";
 import CouponCheck from "./CouponCheck";
 import { toast } from "react-toastify";
 import { AuthContext } from "@/context/AuthContext";
 import { placeOrder } from "@/actions/orderActions";
+import OrderAddressPlace from "./OrderAddressPlace";
 
 export default function PlaceOrderSection({ products }) {
   const [orderedProducts, setOrderedProducts] = useState(
@@ -41,12 +42,24 @@ export default function PlaceOrderSection({ products }) {
     0
   );
 
+  useEffect(() => {
+    setDeliveryLocation(user.address[0]);
+    setOrderedProducts((prevOrderedProducts) =>
+      prevOrderedProducts.map((product) => {
+        const cartItem = user.cart.find(
+          (item) => item.productId._id === product._id
+        );
+        return cartItem ? { ...product, quantity: cartItem.quantity } : product;
+      })
+    );
+  }, [user]);
+
   async function handelPlaceOrder() {
     try {
       const order = await placeOrder({
         customerId: user._id,
         products: orderedProducts.map((product) => ({
-          productId: product.productId,
+          productId: product._id,
           quantity: product.quantity,
         })),
         totalAmount: totalPrice,
@@ -67,13 +80,26 @@ export default function PlaceOrderSection({ products }) {
   return (
     <div className="flex gap-6 flex-1 items-start">
       <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
-        <h1 className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen">
-          Order Summary
-        </h1>
-        <ProductsList
-          products={orderedProducts}
-          onUpdateQuantity={updateQuantity}
-        />
+        <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
+          <h1 className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen">
+            Delivery Address
+          </h1>
+          <OrderAddressPlace
+            address={deliveryLocation}
+            name={user.name}
+            setDeliveryLocation={setDeliveryLocation}
+            allAddresses={user.address}
+          />
+        </div>
+        <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
+          <h1 className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen">
+            Order Summary
+          </h1>
+          <ProductsList
+            products={orderedProducts}
+            onUpdateQuantity={updateQuantity}
+          />
+        </div>
       </div>
       <div className="flex flex-col flex-1 lg:max-w-md w-full gap-5">
         <OrderDetailsCard>
