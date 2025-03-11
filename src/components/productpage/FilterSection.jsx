@@ -13,7 +13,7 @@ const FilterSection = ({ categories, attributes }) => {
     : [];
 
   const [selected, setSelected] = useState(new Set(selectedAttributes));
-  const [openSection, setOpenSection] = useState(null); // To track open modal section
+  const [openSection, setOpenSection] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const FilterSection = ({ categories, attributes }) => {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 1024); // Check if screen is smaller than 'lg'
+      setIsMobile(window.innerWidth < 1024);
     };
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
@@ -52,10 +52,8 @@ const FilterSection = ({ categories, attributes }) => {
 
   return (
     <div className="relative">
-      {/* Desktop View */}
       {!isMobile ? (
         <div className="flex flex-col border border-[#cccccc] rounded-sm">
-          {/* Category Section */}
           <div className="flex flex-col">
             <div className="h-[3.5rem] px-6 flex justify-between w-full items-center bg-custom-light-gray text-xl font-medium text-custom-darkgreen">
               <h1>Category</h1>
@@ -72,7 +70,7 @@ const FilterSection = ({ categories, attributes }) => {
                       item.mainCategory
                     )}`}
                     key={index}
-                    className={`text-lg ${
+                    className={`xlg:text-lg text-base ${
                       isActive
                         ? "bg-gradient-to-r from-custom-darkgold to-custom-gold text-transparent bg-clip-text"
                         : "text-custom-black hover:text-transparent hover:bg-gradient-to-r bg-clip-text from-custom-darkgold to-custom-gold"
@@ -85,7 +83,6 @@ const FilterSection = ({ categories, attributes }) => {
             </div>
           </div>
 
-          {/* Style For Section */}
           <div className="flex flex-col">
             <div className="h-[3.5rem] px-6 flex justify-between w-full items-center bg-custom-light-gray text-xl font-medium text-custom-darkgreen">
               <h1>Style For</h1>
@@ -96,7 +93,7 @@ const FilterSection = ({ categories, attributes }) => {
             <div className="p-4 flex flex-col gap-4">
               {attributes.map((item, index) => (
                 <label
-                  className="cl-checkbox text-lg text-custom-black hover:text-transparent hover:bg-gradient-to-r bg-clip-text from-custom-darkgold to-custom-gold"
+                  className="cl-checkbox xlg:text-lg text-base  text-custom-black hover:text-transparent hover:bg-gradient-to-r bg-clip-text from-custom-darkgold to-custom-gold"
                   key={index}
                 >
                   <input
@@ -111,7 +108,6 @@ const FilterSection = ({ categories, attributes }) => {
           </div>
         </div>
       ) : (
-        // Mobile Bottom Fixed Filter Section
         <>
           <div className="fixed -bottom-2 left-0 z-10 w-full bg-custom-darkgreen text-white shadow-lg p-4 flex justify-between border-t border-[#dddddd]">
             <button
@@ -132,7 +128,6 @@ const FilterSection = ({ categories, attributes }) => {
             </button>
           </div>
 
-          {/* Bottom Sheet Modal */}
           <AnimatePresence>
             {openSection && (
               <motion.div
