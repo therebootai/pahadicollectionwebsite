@@ -3,7 +3,10 @@ import ProfileCard from "@/ui/ProfileCard";
 import { useContext } from "react";
 import { BsThreeDots } from "react-icons/bs";
 
-export default function AddressesList() {
+export default function AddressesList({
+  setEditedAddress,
+  setShowAddressForm,
+}) {
   const { user } = useContext(AuthContext);
 
   return (
@@ -47,6 +50,10 @@ export default function AddressesList() {
                 <button
                   type="button"
                   className="text-custom-darkgreen text-base capitalize"
+                  onClick={() => {
+                    setShowAddressForm(true);
+                    setEditedAddress(add);
+                  }}
                 >
                   Edit
                 </button>

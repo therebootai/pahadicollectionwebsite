@@ -6,12 +6,19 @@ import LiveAssistance from "@/svg/liveAssistance";
 import PaymentOption from "@/svg/paymentOption";
 import SecuredShoping from "@/svg/securedShoping";
 import VideoMeet from "@/svg/vieoMeet";
+import Link from "next/link";
 import React from "react";
 import { FaRegHeart } from "react-icons/fa6";
 import { IoMdRadioButtonOn } from "react-icons/io";
 import { IoStar, IoStarHalfOutline, IoStarOutline } from "react-icons/io5";
 
-const ProductDetailsPageNameSection = ({ title, mrp, price, discount }) => {
+const ProductDetailsPageNameSection = ({
+  title,
+  mrp,
+  price,
+  discount,
+  slug,
+}) => {
   const benifits = [
     {
       icon: <FreeShiping className={"size-4 lg:size-5"} />,
@@ -116,9 +123,12 @@ const ProductDetailsPageNameSection = ({ title, mrp, price, discount }) => {
           <button className="h-[3rem] w-[40%] buttonshinehover flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-lg">
             Add to Cart
           </button>
-          <button className="h-[3rem] w-[40%] buttonshinehover flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-lg">
+          <Link
+            href={`/place-order?products=${slug}`}
+            className="h-[3rem] w-[40%] buttonshinehover flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-lg"
+          >
             Buy Now
-          </button>
+          </Link>
           <button className=" w-[10%] text-xl">
             <FaRegHeart />
           </button>
@@ -129,9 +139,12 @@ const ProductDetailsPageNameSection = ({ title, mrp, price, discount }) => {
           <button className="lg:h-[3rem] h-[2.5rem] w-[45%] flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-base lg:text-lg">
             Add to Cart
           </button>
-          <button className="lg:h-[3rem] h-[2.5rem] w-[45%] flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm  text-base lg:text-lg">
+          <Link
+            href={`/place-order?products=${slug}`}
+            className="lg:h-[3rem] h-[2.5rem] w-[45%] flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm  text-base lg:text-lg"
+          >
             Buy Now
-          </button>
+          </Link>
           <button className=" w-[10%] text-xl">
             <FaRegHeart />
           </button>
