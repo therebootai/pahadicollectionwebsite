@@ -24,6 +24,7 @@ const ProductDetailsPageNameSection = ({
   productId,
   isWishlisted,
   handleWishlist,
+  stock,
 }) => {
   const benifits = [
     {
@@ -105,7 +106,7 @@ const ProductDetailsPageNameSection = ({
       </div>
       <div className=" flex md:flex-row flex-col  gap-4">
         <div className=" h-[2.5rem] md:h-[3rem] w-[8rem] md:w-[10rem] flex justify-center items-center bg-custom-light-gray  text-custom-darkgreen rounded-sm text-sm md:text-lg ">
-          In Stock 100
+          In Stock {stock}
         </div>
         <form className=" flex items-center gap-2">
           <input

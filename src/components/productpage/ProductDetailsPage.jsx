@@ -11,6 +11,7 @@ import OurSimilerProduct from "./OurSimilerProduct";
 import { AuthContext } from "@/context/AuthContext";
 import { removeWishlist, updateWishlist } from "@/actions/customerActions";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 const ProductDetailsPage = ({
   productImage,
@@ -22,6 +23,9 @@ const ProductDetailsPage = ({
   productId,
   description,
   specification,
+  stock,
+  products,
+  category,
 }) => {
   const [activeSection, setActiveSection] = useState("description");
 
@@ -88,6 +92,7 @@ const ProductDetailsPage = ({
             slug={slug}
             isWishlisted={isWishlisted}
             handleWishlist={handleWishlist}
+            stock={stock}
           />
         </div>
       </div>
@@ -136,14 +141,22 @@ const ProductDetailsPage = ({
         </div>
       </div>
       <div className=" flex flex-col gap-3">
-        <h1 className=" text-4xl font-medium text-custom-darkgreen ">
-          Our{" "}
-          <span className=" text-transparent bg-gradient-to-r from-custom-darkgold to-custom-gold bg-clip-text">
-            {" "}
-            Product{" "}
-          </span>
-        </h1>
-        <OurSimilerProduct />
+        <div className=" flex justify-between items-center ">
+          <h1 className=" text-4xl font-medium text-custom-darkgreen ">
+            Our{" "}
+            <span className=" text-transparent bg-gradient-to-r from-custom-darkgold to-custom-gold bg-clip-text">
+              {" "}
+              Product{" "}
+            </span>
+          </h1>
+          <Link
+            href={`/products?category=${encodeURIComponent(category)}`}
+            className=" text-sm xlg:text-lg font-medium text-custom-darkgreen"
+          >
+            View {category} &#x226B;
+          </Link>
+        </div>
+        <OurSimilerProduct products={products} />
       </div>
     </div>
   );
