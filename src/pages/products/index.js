@@ -96,7 +96,7 @@ const Products = ({
             </div>
 
             <div
-              className="lg:w-[80%] w-full overflow-scroll no-scrollbar  grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 py-2 lg:py-0 lg:p-4"
+              className="lg:w-[80%] w-full overflow-scroll no-scrollbar  grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 py-2 lg:py-2 lg:p-4"
               style={{ height: `${rightSideHeight}px` }}
             >
               {products.map((item, index) => (
