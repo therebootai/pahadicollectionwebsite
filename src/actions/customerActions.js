@@ -59,3 +59,32 @@ export const removeWishlist = async (customerId, productId) => {
     return { wishlist: [] };
   }
 };
+
+export async function addToCart(customerId, productId, quantity) {
+  try {
+    const response = await axiosFetch.put("/customers/cart/add", {
+      customerId,
+      productId,
+      quantity,
+    });
+    const { cart } = response.data;
+    return cart;
+  } catch (error) {
+    console.error("Error updating cart:", error.message);
+    return error;
+  }
+}
+export async function removeFromCart(customerId, productId, quantity) {
+  try {
+    const response = await axiosFetch.put("/customers/cart/remove", {
+      customerId,
+      productId,
+      quantity,
+    });
+    const { cart } = response.data;
+    return cart;
+  } catch (error) {
+    console.error("Error updating cart:", error.message);
+    return error;
+  }
+}

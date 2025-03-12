@@ -1,3 +1,5 @@
+import { addToCart } from "@/actions/customerActions";
+import { AuthContext } from "@/context/AuthContext";
 import EasyReplacement from "@/svg/easyReplacement";
 import EasyReturn from "@/svg/easyReturn";
 import FreeShiping from "@/svg/freeShiping";
@@ -7,10 +9,11 @@ import PaymentOption from "@/svg/paymentOption";
 import SecuredShoping from "@/svg/securedShoping";
 import VideoMeet from "@/svg/vieoMeet";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 import { FaRegHeart } from "react-icons/fa6";
 import { IoMdRadioButtonOn } from "react-icons/io";
 import { IoStar, IoStarHalfOutline, IoStarOutline } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 const ProductDetailsPageNameSection = ({
   title,
@@ -18,6 +21,7 @@ const ProductDetailsPageNameSection = ({
   price,
   discount,
   slug,
+  productId,
 }) => {
   const benifits = [
     {
@@ -45,6 +49,25 @@ const ProductDetailsPageNameSection = ({
       name: "Multi Payment Options",
     },
   ];
+
+  const { user, dispatch } = useContext(AuthContext);
+
+  async function addProductToCart() {
+    try {
+      const cartAdded = await addToCart(user._id, productId, 1);
+      if (cartAdded.message) {
+        throw new Error(cartAdded.response.data.message);
+      }
+      toast.success("Product added to Cart");
+      dispatch({
+        type: "LOGIN",
+        payload: { ...user, cart: cartAdded },
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
   return (
     <div className=" flex flex-col gap-4  ">
       <h1 className="xlg:text-3xl md:text-2xl text-xl font-semibold text-custom-darkgreen ">
@@ -120,7 +143,10 @@ const ProductDetailsPageNameSection = ({
       <div className="lg:flex lg:relative absolute items-center gap-6">
         {/* Buttons for Large Screens */}
         <div className="hidden lg:flex gap-6 w-full">
-          <button className="h-[3rem] w-[40%] buttonshinehover flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-lg">
+          <button
+            className="h-[3rem] w-[40%] buttonshinehover flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-lg"
+            onClick={addProductToCart}
+          >
             Add to Cart
           </button>
           <Link
@@ -136,7 +162,10 @@ const ProductDetailsPageNameSection = ({
 
         {/* Sticky Bottom Buttons for Small Screens */}
         <div className="lg:hidden fixed bottom-0 left-0 z-[100] right-0 bg-white p-2 flex gap-3 shadow-lg">
-          <button className="lg:h-[3rem] h-[2.5rem] w-[45%] flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-base lg:text-lg">
+          <button
+            className="lg:h-[3rem] h-[2.5rem] w-[45%] flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-base lg:text-lg"
+            onClick={addProductToCart}
+          >
             Add to Cart
           </button>
           <Link

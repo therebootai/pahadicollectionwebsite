@@ -1,3 +1,5 @@
+import axiosFetch from "@/config/axios.config";
+
 export async function placeOrder({
   customerId,
   products,
@@ -20,6 +22,17 @@ export async function placeOrder({
     const { data } = response.data;
     const { order } = data;
     return order;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+export async function getOrdersOfUser(customerId) {
+  try {
+    const response = await axiosFetch.get(`/orders?customerId=${customerId}`);
+    const { orders } = response.data;
+    return orders;
   } catch (error) {
     console.log(error);
     return error;

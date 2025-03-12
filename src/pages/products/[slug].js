@@ -17,6 +17,7 @@ const SingleProductPage = ({ product }) => {
       <ProductDetailsPage
         title={product.title}
         price={product.price}
+        productId={product._id}
         productImage={
           Array.isArray(product.productImage)
             ? product.productImage.map((img) => img.secure_url)
