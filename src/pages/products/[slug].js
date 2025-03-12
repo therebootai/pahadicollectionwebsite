@@ -26,6 +26,8 @@ const SingleProductPage = ({ product }) => {
         mrp={product.mrp}
         discount={product.discount}
         slug={product.slug}
+        description={product.description}
+        specification={product.specification}
       />
     </MainPageTemplate>
   );

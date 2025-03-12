@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import SubPageBanner from "../global/SubPageBanner";
 import SinglePageImagesComponent from "./SingleProductImagesComponent";
@@ -8,6 +8,9 @@ import ProductDetailsPageDescription from "./ProductDetailsPageDescription";
 import ProductDetailsPageSpecification from "./ProductDetailsPageSpecification";
 import ProductPageDetailsReview from "./ProductPageDetailsReview";
 import OurSimilerProduct from "./OurSimilerProduct";
+import { AuthContext } from "@/context/AuthContext";
+import { removeWishlist, updateWishlist } from "@/actions/customerActions";
+import { toast } from "react-toastify";
 
 const ProductDetailsPage = ({
   productImage,
@@ -17,11 +20,56 @@ const ProductDetailsPage = ({
   discount,
   slug,
   productId,
+  description,
+  specification,
 }) => {
   const [activeSection, setActiveSection] = useState("description");
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
+  };
+
+  const { user, isAuthenticated, dispatch } = useContext(AuthContext);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+
+  useEffect(() => {
+    if (user?.wishlist?.some((item) => item._id === productId)) {
+      setIsWishlisted(true);
+    } else {
+      setIsWishlisted(false);
+    }
+  }, [user?.wishlist, productId]);
+
+  const handleWishlist = async () => {
+    if (!isAuthenticated) {
+      toast.error("You Are not loged in");
+
+      return;
+    }
+
+    try {
+      if (isWishlisted) {
+        const data = await removeWishlist(user.customerId, productId);
+        setIsWishlisted(false);
+        toast.success("Wishlist Removed");
+
+        dispatch({
+          type: "LOGIN",
+          payload: { ...user, wishlist: data.wishlist },
+        });
+      } else {
+        const data = await updateWishlist(user.customerId, productId);
+        setIsWishlisted(true);
+        toast.success("Wishlist added");
+
+        dispatch({
+          type: "LOGIN",
+          payload: { ...user, wishlist: data.wishlist },
+        });
+      }
+    } catch (error) {
+      console.error("Error updating wishlist:", error);
+    }
   };
 
   return (
@@ -38,6 +86,8 @@ const ProductDetailsPage = ({
             discount={discount}
             productId={productId}
             slug={slug}
+            isWishlisted={isWishlisted}
+            handleWishlist={handleWishlist}
           />
         </div>
       </div>
@@ -76,9 +126,11 @@ const ProductDetailsPage = ({
           <ProductPageHeadingIcon className={"w-full h-[1rem] object-cover"} />
         </div>
         <div className="mt-2">
-          {activeSection === "description" && <ProductDetailsPageDescription />}
+          {activeSection === "description" && (
+            <ProductDetailsPageDescription description={description} />
+          )}
           {activeSection === "specifications" && (
-            <ProductDetailsPageSpecification />
+            <ProductDetailsPageSpecification specifications={specification} />
           )}
           {activeSection === "reviews" && <ProductPageDetailsReview />}
         </div>
