@@ -33,7 +33,12 @@ const Products = ({
 
     setLoading(true);
     const nextPage = page + 1;
-    const response = await fetchProductsData(nextPage, 12, category);
+    const response = await fetchProductsData(
+      nextPage,
+      12,
+      category,
+      selectedAttributes
+    );
 
     if (response.products.length > 0) {
       setProducts((prevProducts) => [...prevProducts, ...response.products]);
@@ -60,8 +65,7 @@ const Products = ({
   }, [products]);
 
   const fetchFilteredProducts = async () => {
-    setLoading(true); // Show loader
-
+    setLoading(true);
     const response = await fetchProductsData(
       1,
       12,
@@ -83,8 +87,8 @@ const Products = ({
       <div className="xl:p-16 lg:p-8 p-4 flex flex-col gap-6 lg:gap-8">
         <CategorySlider categories={categories} />
         <div className="border-t border-[#cccccc]">
-          <div className="lg:flex pt-6">
-            <div className="xlg:w-[20%] lg:w-[25%]" ref={leftSideRef}>
+          <div className="flex pt-6">
+            <div className="lg:w-[20%]" ref={leftSideRef}>
               <FilterSection
                 categories={categories}
                 attributes={attributeslist}
@@ -92,7 +96,7 @@ const Products = ({
             </div>
 
             <div
-              className="xlg:w-[80%] lg:w-[75%] w-full  overflow-scroll no-scrollbar  grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 gap-4 lg:pl-4"
+              className="lg:w-[80%] w-full overflow-scroll no-scrollbar  grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 py-2 lg:py-0 lg:p-4"
               style={{ height: `${rightSideHeight}px` }}
             >
               {products.map((item, index) => (
@@ -113,7 +117,10 @@ const Products = ({
                 </Link>
               ))}
 
-              <div ref={observerRef} className="text-center py-4">
+              <div
+                ref={observerRef}
+                className="xl:col-span-4 md:col-span-3 col-span-2 text-center py-4"
+              >
                 {loading && <MiniLoader />}
               </div>
             </div>

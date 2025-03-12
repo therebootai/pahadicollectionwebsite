@@ -18,7 +18,10 @@ export const fetchProductsData = async (
         .join(",")}`;
     }
 
+    console.log("Fetching products from:", url);
+
     const response = await axiosFetch.get(url);
+    console.log("API Response:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching Product data:", error.message);
