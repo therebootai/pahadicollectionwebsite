@@ -13,6 +13,7 @@ import Tooltip from "@/ui/Tooltip";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
+import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { IoMdRadioButtonOn } from "react-icons/io";
 import { IoStar, IoStarHalfOutline, IoStarOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
@@ -135,6 +136,7 @@ const ProductDetailsPageNameSection = ({
       <div className=" flex md:flex-row flex-col  gap-4">
         <div className=" h-[2.5rem] md:h-[3rem] w-[8rem] md:w-[10rem] flex justify-center items-center bg-custom-light-gray  text-custom-darkgreen rounded-sm text-sm md:text-lg ">
           In Stock {stock}
+          In Stock {stock}
         </div>
         <form className=" flex items-center gap-2">
           <input
@@ -188,6 +190,8 @@ const ProductDetailsPageNameSection = ({
           </Link>
           <button onClick={handleWishlist} className=" w-[10%] text-xl">
             {isWishlisted ? <FaHeart /> : <FaRegHeart />}
+          <button onClick={handleWishlist} className=" w-[10%] text-xl">
+            {isWishlisted ? <FaHeart /> : <FaRegHeart />}
           </button>
         </div>
 
@@ -206,6 +210,7 @@ const ProductDetailsPageNameSection = ({
             Buy Now
           </Link>
           <button className=" w-[10%] text-xl">
+            {isWishlisted ? <FaHeart /> : <FaRegHeart />}
             {isWishlisted ? <FaHeart /> : <FaRegHeart />}
           </button>
         </MobileFixFooter>
