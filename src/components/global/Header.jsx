@@ -1,9 +1,10 @@
+"use client";
 import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose, IoCloseSharp, IoLogOut, IoSearch } from "react-icons/io5";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { AiOutlineMenuFold } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { FaRegHeart } from "react-icons/fa";
@@ -64,7 +65,7 @@ const Header = () => {
     {
       text: "Products",
 
-      href: "/products",
+      href: "/products?page=1",
     },
     {
       text: "Blogs",
@@ -79,6 +80,50 @@ const Header = () => {
       href: "",
     },
   ];
+
+  const profileLinks = user
+    ? [
+        {
+          text: "Account Settings",
+          subMenu: [
+            {
+              text: "Profile",
+              href: "/my-profile",
+            },
+            {
+              text: "Manage Address",
+              href: "/my-profile/manage-address",
+            },
+          ],
+        },
+        {
+          text: "My Interactions",
+          subMenu: [
+            {
+              text: "Wishlists",
+              href: "/my-interaction/my-wishlist",
+            },
+            {
+              text: "Cart",
+              href: "/my-interaction/my-cart",
+            },
+            {
+              text: "Orders",
+              href: "/my-orders",
+            },
+          ],
+        },
+      ]
+    : [
+        {
+          text: "Login",
+          href: "/login",
+        },
+        {
+          text: "Create an Account",
+          href: "/signup",
+        },
+      ];
 
   useEffect(() => {
     let ticking = false;
@@ -97,7 +142,10 @@ const Header = () => {
 
   async function handleLogout() {
     try {
-      await logoutCustomer();
+      const response = await logoutCustomer();
+      if (response.error) {
+        throw new Error(response.error);
+      }
       toast.success("You successfully logged out.");
       logout();
     } catch (error) {
@@ -333,7 +381,7 @@ const Header = () => {
                   {item.href ? (
                     <Link
                       href={item.href}
-                      className="hover:text-primary lg:text-base text-base md:text-xl xlg:text-lg "
+                      className="hover:text-custom-darkgreen lg:text-base text-base md:text-xl xlg:text-lg "
                     >
                       {item.text}
                     </Link>
@@ -374,7 +422,7 @@ const Header = () => {
                                           href={link.href}
                                           className="flex items-center gap-2"
                                         >
-                                          <span className="text-primary">
+                                          <span className="text-custom-darkgreen">
                                             &gt;
                                           </span>
                                           {link.text}
@@ -392,6 +440,67 @@ const Header = () => {
                   )}
                 </li>
               ))}
+              {profileLinks.map((item, index) => (
+                <li key={index} className="relative">
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className="hover:text-custom-darkgreen lg:text-base text-base md:text-xl xlg:text-lg "
+                    >
+                      {item.text}
+                    </Link>
+                  ) : (
+                    <div>
+                      <div
+                        className="flex justify-between items-center cursor-pointer lg:text-base text-base md:text-xl xlg:text-lg"
+                        onClick={() =>
+                          setOpenDropdown(openDropdown === index ? null : index)
+                        }
+                      >
+                        <span className="capitalize">{item.text}</span>
+                        <span>{openDropdown === index ? "-" : "+"}</span>
+                      </div>
+
+                      {openDropdown === index && (
+                        <div
+                          className={`duration-500 transition-all origin-top ${
+                            openDropdown === index
+                              ? "h-auto opacity-100"
+                              : "h-0 opacity-0"
+                          } overflow-hidden flex flex-col rounded`}
+                        >
+                          {item.subMenu && item.subMenu.length > 0 && (
+                            <ul className="flex flex-col gap-4 my-4 ps-2">
+                              {item.subMenu.map((menu, subIndex) => (
+                                <li
+                                  className="lg:text-base text-base md:text-xl xlg:text-lg"
+                                  key={subIndex}
+                                >
+                                  <Link
+                                    href={menu.href}
+                                    className="flex items-center gap-2"
+                                  >
+                                    {menu.text}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </li>
+              ))}
+              {user && (
+                <button
+                  className="hover:text-custom-darkgreen text-base xlg:text-lg text-left"
+                  type="button"
+                  onClick={handleLogout}
+                >
+                  Log out
+                </button>
+              )}
             </ul>
           </div>
         )}

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import HeadingComponent from "../global/HeadingComponent";
 import useElementHeight from "@/hooks/useElementHeight";

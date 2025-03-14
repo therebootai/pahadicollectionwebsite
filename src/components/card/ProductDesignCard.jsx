@@ -1,3 +1,4 @@
+"use client";
 import { removeWishlist, updateWishlist } from "@/actions/customerActions";
 import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
@@ -121,10 +122,10 @@ const ProductDesignCard = ({
           {productname}
         </h1>
         <div className="flex items-center justify-between">
-          <div className="lg:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs lg:text-sm xlg:text-base font-medium flex justify-center items-center px-2 lg:px-4 rounded-full">
+          <div className="lg:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs lg:text-sm xlg:text-base font-medium flex justify-center items-center px-2 lg:px-4 rounded-full whitespace-nowrap">
             &#8377; {Math.floor(productprice)}
           </div>
-          <div className="text-custom-gray text-xs sm:text-sm xlg:text-base font-medium line-through">
+          <div className="text-custom-gray text-xs sm:text-sm xlg:text-base font-medium line-through truncate">
             &#8377; {Math.floor(productMRP)}
           </div>
 

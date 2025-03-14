@@ -1,14 +1,13 @@
+import { fetchAllCoupons } from "@/actions/couponAction";
 import { fetchProductsData } from "@/actions/FetchProducts";
 import { fetchSingleProductData } from "@/actions/FetchSingleProduct";
 import SubPageBanner from "@/components/global/SubPageBanner";
 import ProductDetailsPage from "@/components/productpage/ProductDetailsPage";
 import MainPageTemplate from "@/templates/MainPageTemplate";
-import React from "react";
 
-const SingleProductPage = ({ product, products }) => {
-  if (!product) {
-    return <div>Product not found</div>;
-  }
+export default async function ProductDetails({ params }) {
+  const { slug } = await params;
+  const { product, products, coupons } = await getPageProps(slug);
 
   return (
     <MainPageTemplate
@@ -32,23 +31,22 @@ const SingleProductPage = ({ product, products }) => {
         stock={product.in_stock}
         products={products}
         category={product.category.mainCategory}
+        coupons={coupons}
       />
     </MainPageTemplate>
   );
-};
+}
 
-export default SingleProductPage;
-
-export async function getServerSideProps(context) {
-  const { slug } = context.params;
+async function getPageProps(slug) {
   const product = await fetchSingleProductData(slug);
   const category = product.category.mainCategory;
-  const initialData = await fetchProductsData(1, 12, category);
-
+  const [initialData, coupons] = await Promise.all([
+    fetchProductsData(1, 12, category),
+    fetchAllCoupons(),
+  ]);
   return {
-    props: {
-      product,
-      products: initialData.products,
-    },
+    product,
+    products: initialData.products,
+    coupons,
   };
 }

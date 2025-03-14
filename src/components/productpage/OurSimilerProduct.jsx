@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import ProductDesignCard from "../card/ProductDesignCard";
 import Slider from "react-slick";

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter, FaYoutube } from "react-icons/fa6";
 

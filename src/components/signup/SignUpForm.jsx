@@ -1,37 +1,28 @@
+"use client";
 import { signupCustomer } from "@/actions/authActions";
 import { AuthContext } from "@/context/AuthContext";
 import MiniLoader from "@/ui/MiniLoader";
-import { useActionState, useContext } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useContext, useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 export default function SignUpForm() {
   const { login } = useContext(AuthContext);
-
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
   const handleSignup = async (prevState, formData) => {
     const name = formData.get("name");
     const email = formData.get("email");
     const mobile = formData.get("mobile");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirm_password");
-    const house_no = formData.get("house_no");
-    const street_name = formData.get("street_name");
-    const area = formData.get("area");
-    const post_office = formData.get("post_office");
-    const pincode = formData.get("pincode");
-    const landmark = formData.get("landmark");
 
     if (password !== confirmPassword) {
       return { ...prevState, error: "Passwords do not match" };
     }
 
     const address = {};
-
-    if (house_no) address.house_no = house_no;
-    if (street_name) address.street_name = street_name;
-    if (area) address.area = area;
-    if (post_office) address.post_office = post_office;
-    if (pincode) address.pincode = pincode;
-    if (landmark) address.landmark = landmark;
 
     try {
       const customer = await signupCustomer({
@@ -46,6 +37,7 @@ export default function SignUpForm() {
       }
       toast.success("Account created successfully");
       login(customer);
+      router.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -83,7 +75,7 @@ export default function SignUpForm() {
         className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
         required
       />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 justify-between">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 justify-between">
         <input
           type="text"
           name="house_no"
@@ -120,19 +112,28 @@ export default function SignUpForm() {
           placeholder="Enter Your Landmark"
           className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
         />
-      </div>
+      </div> */}
       <div className="flex relative flex-1">
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Enter Your Password"
           className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
+          required
         />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="mr-4 text-xl text-custom-darkgreen cursor-pointer absolute right-0 top-1/2 transform -translate-y-1/2"
+        >
+          {showPassword ? <FiEyeOff /> : <FiEye />}
+        </button>
       </div>
       <div className="flex relative flex-1">
         <input
           type="password"
           name="confirm_password"
+          required
           placeholder="Confirm Your Password"
           className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
         />

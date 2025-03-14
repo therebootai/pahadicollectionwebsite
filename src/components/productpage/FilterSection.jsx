@@ -1,16 +1,18 @@
+"use client";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { motion, AnimatePresence } from "framer-motion";
+import MobileFixFooter from "@/ui/MobileFixFooter";
 
 const FilterSection = ({ categories, attributes }) => {
   const router = useRouter();
-  const currentCategory = router.query.category || "";
-  const selectedAttributes = router.query.attribute
-    ? router.query.attribute.split(",")
-    : [];
+  const searchParams = useSearchParams();
+
+  const currentCategory = searchParams.get("category") || "";
+  const selectedAttributes = searchParams.getAll("attribute") || [];
 
   const [selected, setSelected] = useState(new Set(selectedAttributes));
   const [openSection, setOpenSection] = useState(null);
@@ -18,7 +20,7 @@ const FilterSection = ({ categories, attributes }) => {
 
   useEffect(() => {
     setSelected(new Set(selectedAttributes));
-  }, [router.query.attribute]);
+  }, [selectedAttributes.length > 0]);
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -38,16 +40,14 @@ const FilterSection = ({ categories, attributes }) => {
     }
     setSelected(updatedSelected);
 
-    const queryParams = new URLSearchParams(router.query);
+    const params = new URLSearchParams(searchParams);
     if (updatedSelected.size > 0) {
-      queryParams.set("attribute", Array.from(updatedSelected).join(","));
+      params.set("attribute", Array.from(updatedSelected).join(","));
     } else {
-      queryParams.delete("attribute");
+      params.delete("attribute");
     }
 
-    router.push(`/products?${queryParams.toString()}`, undefined, {
-      shallow: true,
-    });
+    router.push(`/products?page=1&${params.toString()}`, { shallow: true });
   };
 
   return (
@@ -66,7 +66,7 @@ const FilterSection = ({ categories, attributes }) => {
                 const isActive = currentCategory === item.mainCategory;
                 return (
                   <Link
-                    href={`/products?category=${encodeURIComponent(
+                    href={`/products?page=1&category=${encodeURIComponent(
                       item.mainCategory
                     )}`}
                     key={index}
@@ -109,7 +109,7 @@ const FilterSection = ({ categories, attributes }) => {
         </div>
       ) : (
         <>
-          <div className="fixed -bottom-2 left-0 z-10 w-full bg-custom-darkgreen text-white shadow-lg p-4 flex justify-between border-t border-[#dddddd]">
+          <MobileFixFooter className="bg-custom-darkgreen text-white shadow-lg p-4 flex justify-between border-t border-[#dddddd]">
             <button
               className="w-1/2 text-center text-lg font-medium border-r border-[#dddddd]"
               onClick={() =>
@@ -126,7 +126,7 @@ const FilterSection = ({ categories, attributes }) => {
             >
               Style For
             </button>
-          </div>
+          </MobileFixFooter>
 
           <AnimatePresence>
             {openSection && (
@@ -135,7 +135,7 @@ const FilterSection = ({ categories, attributes }) => {
                 animate={{ y: 0 }}
                 exit={{ y: "100%" }}
                 transition={{ duration: 0.3 }}
-                className="fixed bottom-[3rem] left-0 w-full bg-white shadow-lg rounded-t-xl p-6 z-10"
+                className="fixed bottom-[3.25rem] left-0 w-full bg-white shadow-lg rounded-t-xl p-6 z-10"
               >
                 <div className="flex justify-between items-center border-b pb-3">
                   <h2 className="text-xl font-bold capitalize">
@@ -154,7 +154,7 @@ const FilterSection = ({ categories, attributes }) => {
                     <div className="flex flex-col gap-3">
                       {categories.map((item, index) => (
                         <Link
-                          href={`/products?category=${encodeURIComponent(
+                          href={`/products?page=1&category=${encodeURIComponent(
                             item.mainCategory
                           )}`}
                           key={index}

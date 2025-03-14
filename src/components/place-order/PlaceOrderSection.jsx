@@ -1,3 +1,4 @@
+"use client";
 import { useContext, useEffect, useState } from "react";
 import ProductsList from "./ProductLists";
 import OrderDetailsCard from "@/ui/OrderDetailsCard";
@@ -78,8 +79,8 @@ export default function PlaceOrderSection({ products }) {
   }
 
   return (
-    <div className="flex gap-6 flex-1 items-start">
-      <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
+    <div className="flex flex-col-reverse lg:flex-row gap-6 flex-1 items-start">
+      <div className="flex flex-col-reverse lg:flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
         <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
           <h1 className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen">
             Delivery Address

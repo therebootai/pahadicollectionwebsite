@@ -1,7 +1,7 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import ShopByCategoryCard from "../card/ShopByCategoryCard";
-import { useRouter } from "next/router";
 
 const CategorySlider = ({ categories }) => {
   const [slidesToShow, setSlidesToShow] = useState(5);
@@ -63,7 +63,7 @@ const CategorySlider = ({ categories }) => {
           >
             <div className=" w-[95%]">
               <ShopByCategoryCard
-                categoryLink={`/products?category=${encodeURIComponent(
+                categoryLink={`/products?page=1&category=${encodeURIComponent(
                   item.mainCategory
                 )}`}
                 categoryimg={item.categoryImage.secure_url}

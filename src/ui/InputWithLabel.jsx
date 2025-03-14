@@ -1,4 +1,5 @@
-import { useActionState, useCallback, useState } from "react";
+"use client";
+import { useActionState, useState } from "react";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";

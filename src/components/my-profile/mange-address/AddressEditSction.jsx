@@ -1,3 +1,4 @@
+"use client";
 import { IoAdd } from "react-icons/io5";
 import AddAndEditAddress from "./AddAndEditAddress";
 import AddressesList from "./AddressesList";

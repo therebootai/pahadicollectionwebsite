@@ -1,3 +1,4 @@
+"use client";
 import { updateCustomer } from "@/actions/customerActions";
 import { AuthContext } from "@/context/AuthContext";
 import InputWithLabel from "@/ui/InputWithLabel";
