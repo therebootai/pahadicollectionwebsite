@@ -49,7 +49,7 @@ export default function OrderAddressPlace({
       <Popup isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         {allAddresses.map((add, index) => (
           <div
-            className="flex gap-2 items-center truncate border-b border-[#ddd] last-of-type:border-b-0 py-1 last-of-type:py-0 ps-1"
+            className="flex gap-2 items-center flex-wrap lg:flex-nowrap truncate border-b border-[#ddd] last-of-type:border-b-0 py-1 last-of-type:py-0 ps-1"
             key={index}
           >
             <input

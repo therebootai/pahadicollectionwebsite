@@ -253,3 +253,14 @@
 }
 
 /* checkbox end  */
+
+@media screen and (max-width: 768px) {
+  .loader {
+    width: 1rem;
+    height: 1rem;
+  }
+  .loader::after {
+    width: 1rem;
+    height: 1rem;
+  }
+}

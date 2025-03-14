@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import HeadingComponent from "../global/HeadingComponent";
 import Image from "next/image";
@@ -31,7 +32,7 @@ const ShopByCategory = ({ categories }) => {
           {categories.map((item, index) => (
             <div key={index} className="h-full">
               <ShopByCategoryCard
-                categoryLink={`/products?category=${encodeURIComponent(
+                categoryLink={`/products?page=1&category=${encodeURIComponent(
                   item.mainCategory
                 )}`}
                 categoryimg={item.categoryImage.secure_url}

@@ -1,11 +1,8 @@
 import React from "react";
 
-const ProductDetailsPageSpecification = () => {
-  const specifications = [
-    { name: "BRAND", details: "HP" },
-    { name: "BRAND", details: "HP" },
-    { name: "BRAND", details: "HP" },
-  ];
+const ProductDetailsPageSpecification = ({ specifications = [] }) => {
+  if (specifications.length === 0) return <div>""</div>;
+
   return (
     <div>
       <div className="flex flex-col">
@@ -18,9 +15,9 @@ const ProductDetailsPageSpecification = () => {
               } `}
             >
               <div className="w-[30%] p-4  border-r border-[#CACACA]">
-                {item.name}
+                {item.key}
               </div>
-              <div className="w-[70%] p-4">{item.details}</div>
+              <div className="w-[70%] p-4">{item.value}</div>
             </div>
           ))}
         </div>
