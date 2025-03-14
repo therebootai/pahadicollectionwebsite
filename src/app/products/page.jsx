@@ -1,7 +1,6 @@
 import { fetchAtributeData } from "@/actions/fetchAtribute";
 import { fetchCategoryData } from "@/actions/FetchCategory";
 import { fetchProductsData } from "@/actions/FetchProducts";
-import ProductDesignCard from "@/components/card/ProductDesignCard";
 import SubPageBanner from "@/components/global/SubPageBanner";
 import CategorySlider from "@/components/productpage/CategorySlider";
 import FilterSection from "@/components/productpage/FilterSection";
@@ -9,7 +8,6 @@ import ProductFetchObserver from "@/components/productpage/ProductFetchObserver"
 import ProductsList from "@/components/productpage/ProductsList";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import MiniLoader from "@/ui/MiniLoader";
-import Link from "next/link";
 
 export default async function Products({ searchParams }) {
   const category = (await searchParams).category || "";
@@ -41,7 +39,11 @@ export default async function Products({ searchParams }) {
               className="lg:w-[80%] w-full overflow-scroll no-scrollbar  grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 py-2 lg:py-2 lg:p-4"
               // style={{ height: `${rightSideHeight}px` }}
             >
-              <ProductsList products={initialProducts} />
+              <ProductsList
+                products={initialProducts}
+                category={category}
+                attribute={attribute}
+              />
               <ProductFetchObserver
                 currentPage={currentPage}
                 totalPages={totalPages}

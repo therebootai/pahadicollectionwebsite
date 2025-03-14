@@ -13,7 +13,6 @@ import Tooltip from "@/ui/Tooltip";
 import Link from "next/link";
 import React, { useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
-import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { IoMdRadioButtonOn } from "react-icons/io";
 import { IoStar, IoStarHalfOutline, IoStarOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
@@ -188,8 +187,6 @@ const ProductDetailsPageNameSection = ({
           >
             Buy Now
           </Link>
-          <button onClick={handleWishlist} className=" w-[10%] text-xl">
-            {isWishlisted ? <FaHeart /> : <FaRegHeart />}
           <button onClick={handleWishlist} className=" w-[10%] text-xl">
             {isWishlisted ? <FaHeart /> : <FaRegHeart />}
           </button>

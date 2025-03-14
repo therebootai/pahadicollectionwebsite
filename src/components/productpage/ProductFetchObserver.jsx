@@ -24,7 +24,7 @@ export default function ProductFetchObserver({ currentPage, totalPages }) {
   }, [currentPage]);
 
   function changePage(currentPage, totalPages) {
-    if (parseInt(currentPage) === parseInt(totalPages)) {
+    if (parseInt(currentPage) >= parseInt(totalPages)) {
       return;
     }
     const params = new URLSearchParams(searchParams);
