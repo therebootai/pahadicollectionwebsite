@@ -11,10 +11,6 @@ import { AuthContext } from "@/context/AuthContext";
 import { removeWishlist, updateWishlist } from "@/actions/customerActions";
 import { toast } from "react-toastify";
 import Link from "next/link";
-import { AuthContext } from "@/context/AuthContext";
-import { removeWishlist, updateWishlist } from "@/actions/customerActions";
-import { toast } from "react-toastify";
-import Link from "next/link";
 
 const ProductDetailsPage = ({
   productImage,
@@ -35,49 +31,6 @@ const ProductDetailsPage = ({
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
-  };
-
-  const { user, isAuthenticated, dispatch } = useContext(AuthContext);
-  const [isWishlisted, setIsWishlisted] = useState(false);
-
-  useEffect(() => {
-    if (user?.wishlist?.some((item) => item._id === productId)) {
-      setIsWishlisted(true);
-    } else {
-      setIsWishlisted(false);
-    }
-  }, [user?.wishlist, productId]);
-
-  const handleWishlist = async () => {
-    if (!isAuthenticated) {
-      toast.error("You Are not loged in");
-
-      return;
-    }
-
-    try {
-      if (isWishlisted) {
-        const data = await removeWishlist(user.customerId, productId);
-        setIsWishlisted(false);
-        toast.success("Wishlist Removed");
-
-        dispatch({
-          type: "LOGIN",
-          payload: { ...user, wishlist: data.wishlist },
-        });
-      } else {
-        const data = await updateWishlist(user.customerId, productId);
-        setIsWishlisted(true);
-        toast.success("Wishlist added");
-
-        dispatch({
-          type: "LOGIN",
-          payload: { ...user, wishlist: data.wishlist },
-        });
-      }
-    } catch (error) {
-      console.error("Error updating wishlist:", error);
-    }
   };
 
   const { user, isAuthenticated, dispatch } = useContext(AuthContext);
@@ -182,11 +135,7 @@ const ProductDetailsPage = ({
           {activeSection === "description" && (
             <ProductDetailsPageDescription description={description} />
           )}
-          {activeSection === "description" && (
-            <ProductDetailsPageDescription description={description} />
-          )}
           {activeSection === "specifications" && (
-            <ProductDetailsPageSpecification specifications={specification} />
             <ProductDetailsPageSpecification specifications={specification} />
           )}
           {activeSection === "reviews" && <ProductPageDetailsReview />}

@@ -4,8 +4,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductDesignCard from "../card/ProductDesignCard";
 
-export default function ProductsList({ products }) {
+export default function ProductsList({ products, category, attribute }) {
   const [allProducts, setAllProducts] = useState(products);
+
+  useEffect(() => {
+    setAllProducts([]);
+  }, [category, attribute]);
 
   useEffect(() => {
     setAllProducts((prev) => [...prev, ...products]);
