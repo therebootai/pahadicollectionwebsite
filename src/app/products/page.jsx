@@ -9,6 +9,11 @@ import ProductsList from "@/components/productpage/ProductsList";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import MiniLoader from "@/ui/MiniLoader";
 
+export const metaData = {
+  title: "Products",
+  description: "Products",
+};
+
 export default async function Products({ searchParams }) {
   const category = (await searchParams).category || "";
   const attribute = (await searchParams).attribute || "";
@@ -22,7 +27,7 @@ export default async function Products({ searchParams }) {
   } = await getPageProps({ page, category, attribute });
 
   return (
-    <MainPageTemplate metaData={{ title: "Products", description: "Products" }}>
+    <MainPageTemplate>
       <SubPageBanner subbanner={"/images/subbanner.jpg"} />
       <div className="xl:p-16 lg:p-8 p-4 flex flex-col gap-6 lg:gap-8">
         <CategorySlider categories={categories} />
@@ -47,6 +52,7 @@ export default async function Products({ searchParams }) {
               <ProductFetchObserver
                 currentPage={currentPage}
                 totalPages={totalPages}
+                path={"/products"}
               />
               {!initialProducts && <MiniLoader />}
             </div>

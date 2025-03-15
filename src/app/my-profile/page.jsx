@@ -1,3 +1,4 @@
+import { checkTokenAuth } from "@/actions/authActions";
 import PersonalDetails from "@/components/my-profile/PersonalDetails";
 import ProfileSideBar from "@/components/my-profile/ProfileSideBar";
 import MainPageTemplate from "@/templates/MainPageTemplate";
@@ -10,7 +11,9 @@ export default async function MyProfile() {
 
   const token = cookieStore.get("token") || null;
 
-  if (!token) {
+  const { user } = await getPageProps();
+
+  if (!token || !user) {
     redirect("/login");
   }
 
@@ -22,9 +25,19 @@ export default async function MyProfile() {
         <Breadcumb label={"My Profile"} />
         <div className="flex gap-6">
           <ProfileSideBar />
-          <PersonalDetails />
+          <PersonalDetails user={user} />
         </div>
       </div>
     </MainPageTemplate>
   );
+}
+
+async function getPageProps() {
+  try {
+    const [user] = await Promise.all([checkTokenAuth()]);
+    return { user };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
 }

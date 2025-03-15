@@ -18,8 +18,8 @@ export default function LoginForm() {
 
     try {
       const customer = await loginCustomer(email_or_phone, password);
-      if (customer.response) {
-        throw new Error(customer.response.data.message);
+      if (customer.message && customer.message !== "Login successful") {
+        throw new Error(customer.message);
       }
       toast.success("Logged in successfully");
       login(customer);

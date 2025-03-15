@@ -1,4 +1,5 @@
 import OrderListsSection from "@/components/my-orders/OrderListsSection";
+import ProfileSideBar from "@/components/my-profile/ProfileSideBar";
 import MainPageTemplate from "@/templates/MainPageTemplate";
 import Breadcumb from "@/ui/Breadcumb";
 import { cookies } from "next/headers";
@@ -18,7 +19,8 @@ export default async function MyOrders() {
     >
       <div className="xl:px-16 lg:px-8 px-4 flex flex-col gap-6 my-6">
         <Breadcumb label={"My Orders"} />
-        <div className="flex gap-6">
+        <div className="flex gap-6 items-start">
+          <ProfileSideBar />
           <OrderListsSection />
         </div>
       </div>

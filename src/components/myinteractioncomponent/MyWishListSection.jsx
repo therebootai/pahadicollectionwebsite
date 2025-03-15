@@ -6,8 +6,8 @@ import Link from "next/link";
 import React, { useContext } from "react";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 
-const MyWishListSection = () => {
-  const { user, dispatch } = useContext(AuthContext);
+const MyWishListSection = ({ user }) => {
+  const { dispatch } = useContext(AuthContext);
 
   const handleDelete = async (productId) => {
     try {
@@ -23,9 +23,7 @@ const MyWishListSection = () => {
       console.error("Error removing from wishlist:", error.message);
     }
   };
-  if (!user) {
-    return <div></div>;
-  }
+  
   if (user.wishlist.length === 0) {
     return <div>No items in your wishlist</div>;
   }
@@ -54,7 +52,7 @@ const MyWishListSection = () => {
                 <h1 className="text-base md:text-xl font-medium text-custom-darkgreen">
                   {item.title}
                 </h1>
-                <h1 className=" text-base line-clamp-2 hidden md:block">
+                <h1 className=" text-base md:line-clamp-2 hidden">
                   {item.description}
                 </h1>
                 <div className="flex flex-row items-center gap-4">

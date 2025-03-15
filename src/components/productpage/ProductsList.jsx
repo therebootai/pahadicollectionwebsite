@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProductDesignCard from "../card/ProductDesignCard";
 
-export default function ProductsList({ products, category, attribute }) {
+export default function ProductsList({
+  products,
+  category = null,
+  attribute = null,
+}) {
   const [allProducts, setAllProducts] = useState(products);
 
   useEffect(() => {
@@ -23,8 +27,8 @@ export default function ProductsList({ products, category, attribute }) {
     >
       <ProductDesignCard
         productId={item._id}
-        productimg={item.thumbnail_image.secure_url}
-        producthoverimg={item.hoverImage.secure_url}
+        productimg={item.thumbnail_image?.secure_url}
+        producthoverimg={item.hoverImage?.secure_url}
         productname={item.title}
         productDiscount={item.discount}
         productprice={item.price}

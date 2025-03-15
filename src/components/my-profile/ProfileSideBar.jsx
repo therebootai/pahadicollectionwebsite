@@ -35,6 +35,10 @@ export default function ProfileSideBar() {
       href: "/my-interaction/my-cart",
       text: "My Cart",
     },
+    {
+      href: "/my-orders",
+      text: "My Orders",
+    },
   ];
 
   return (

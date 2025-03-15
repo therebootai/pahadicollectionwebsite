@@ -9,7 +9,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 
-const MyCartListSection = () => {
+const MyCartListSection = ({ user }) => {
   const [cart, setCart] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -74,7 +74,7 @@ const MyCartListSection = () => {
     }
   };
 
-  const { user, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   useEffect(() => {
     setCart(user.cart);
@@ -106,6 +106,10 @@ const MyCartListSection = () => {
     }
   }
 
+  if (user.cart.length === 0) {
+    return <div>No items in your cart</div>;
+  }
+
   return (
     <div className="flex gap-6 flex-col-reverse lg:flex-row lg:items-start flex-1">
       <div className="flex flex-col gap-4 flex-1">
@@ -118,7 +122,7 @@ const MyCartListSection = () => {
               href={`/products/${item.productId?.slug}`}
               className="md:w-[85%] flex flex-row gap-4"
             >
-              <div className="w-[40%] md:w-[15%] h-full relative">
+              <div className="w-[40%] md:w-[15%] h-32 md:h-full relative">
                 <Image
                   src={item.productId?.thumbnail_image?.secure_url}
                   alt=""
@@ -130,7 +134,7 @@ const MyCartListSection = () => {
                 <h1 className="text-lg md:text-xl font-medium text-custom-darkgreen">
                   {item.productId?.title}
                 </h1>
-                <h1 className="text-base line-clamp-2 hidden md:block">
+                <h1 className="text-base md:line-clamp-2 hidden">
                   {item.productId?.description}
                 </h1>
                 <div className="flex flex-row items-center gap-4">

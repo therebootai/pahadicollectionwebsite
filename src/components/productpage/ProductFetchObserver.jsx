@@ -2,7 +2,11 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 
-export default function ProductFetchObserver({ currentPage, totalPages }) {
+export default function ProductFetchObserver({
+  currentPage,
+  totalPages,
+  path,
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const observerRef = useRef(null);
@@ -30,7 +34,7 @@ export default function ProductFetchObserver({ currentPage, totalPages }) {
     const params = new URLSearchParams(searchParams);
     params.set("page", currentPage + 1);
 
-    router.push(`/products?${params.toString()}`, { shallow: true });
+    router.push(`${path}?${params.toString()}`, { shallow: true });
   }
   return (
     <div
