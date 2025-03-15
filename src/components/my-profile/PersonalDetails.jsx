@@ -5,8 +5,8 @@ import InputWithLabel from "@/ui/InputWithLabel";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 
-export default function PersonalDetails() {
-  const { user, login } = useContext(AuthContext);
+export default function PersonalDetails({ user }) {
+  const { login } = useContext(AuthContext);
 
   async function handelInputSubmit(updatedData) {
     try {

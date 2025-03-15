@@ -19,7 +19,8 @@ export default function SignUpForm() {
     const confirmPassword = formData.get("confirm_password");
 
     if (password !== confirmPassword) {
-      return { ...prevState, error: "Passwords do not match" };
+      toast.error("Passwords do not match");
+      return;
     }
 
     const address = {};
@@ -32,8 +33,11 @@ export default function SignUpForm() {
         password,
         address,
       });
-      if (customer.response) {
-        throw new Error(customer.response.data.message);
+      if (customer.message) {
+        if (customer.message.includes("Request failed with status code 400")) {
+          throw new Error("Customer already exists");
+        }
+        throw new Error(customer.message);
       }
       toast.success("Account created successfully");
       login(customer);
