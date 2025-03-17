@@ -34,7 +34,7 @@ export default function ProductFetchObserver({
     const params = new URLSearchParams(searchParams);
     params.set("page", currentPage + 1);
 
-    router.push(`${path}?${params.toString()}`, { shallow: true });
+    router.push(`${path}?${params.toString()}`, { scroll: false });
   }
   return (
     <div
