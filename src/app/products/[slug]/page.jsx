@@ -16,14 +16,14 @@ export default async function ProductDetails({ params }) {
       <SubPageBanner subbanner={"/images/subbanner.jpg"} />
       <ProductDetailsPage
         title={product.title}
-        price={product.price}
+        price={Math.round(product.price)}
         productId={product._id}
         productImage={
           Array.isArray(product.productImage)
             ? product.productImage.map((img) => img.secure_url)
             : []
         }
-        mrp={product.mrp}
+        mrp={Math.round(product.mrp)}
         discount={product.discount}
         slug={product.slug}
         description={product.description}

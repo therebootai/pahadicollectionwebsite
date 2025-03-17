@@ -42,6 +42,7 @@ export default function LoginForm() {
         type="text"
         name="email_or_phone"
         placeholder="Email or Phone"
+        pattern="^\S+$"
         className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
       />
       <div className="flex relative flex-1">
@@ -49,6 +50,7 @@ export default function LoginForm() {
           type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Password"
+          pattern="^\S+$"
           className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
         />
         <button

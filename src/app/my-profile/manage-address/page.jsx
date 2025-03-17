@@ -1,3 +1,4 @@
+import { checkTokenAuth } from "@/actions/authActions";
 import AddressEditSction from "@/components/my-profile/mange-address/AddressEditSction";
 import ProfileSideBar from "@/components/my-profile/ProfileSideBar";
 import MainPageTemplate from "@/templates/MainPageTemplate";
@@ -10,7 +11,9 @@ export default async function ManageAddress() {
 
   const token = cookieStore.get("token") || null;
 
-  if (!token) {
+  const { user } = await getPageProps();
+
+  if (!token || !user) {
     redirect("/login");
   }
   return (
@@ -21,9 +24,19 @@ export default async function ManageAddress() {
         <Breadcumb label={"Manage Address"} />
         <div className="flex gap-6">
           <ProfileSideBar />
-          <AddressEditSction />
+          <AddressEditSction user={user} />
         </div>
       </div>
     </MainPageTemplate>
   );
+}
+
+async function getPageProps() {
+  try {
+    const [user] = await Promise.all([checkTokenAuth()]);
+    return { user };
+  } catch (error) {
+    console.log(error);
+    return { error };
+  }
 }

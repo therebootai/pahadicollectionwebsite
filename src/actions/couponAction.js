@@ -18,15 +18,15 @@ export async function useCoupon(couponCode) {
     const { coupon } = response.data;
     return coupon;
   } catch (error) {
-    console.log(error);
-    return error;
+    console.log(error.response.data);
+    return error.response.data;
   }
 }
 
 export async function fetchAllCoupons() {
   try {
     const response = await axiosFetch.get(
-      `/coupons/?isActive=true&endDate=${new Date().toISOString()}`
+      `/coupons/?isActive=true&endDate=${new Date().toISOString()}&startDate=${new Date().toISOString()}`
     );
     const { coupons } = response.data;
     return coupons;

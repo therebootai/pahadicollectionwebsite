@@ -44,7 +44,7 @@ export default function OrderListsSection() {
             <div className="flex flex-row lg:flex-col gap-4 items-start justify-between">
               <h3 className="text-custom-gray">Total Ammount</h3>
               <p className="text-custom-darkgreen">
-                &#8377; {item.totalAmount}
+                &#8377; {Math.round(item.totalAmount)}
               </p>
             </div>
             <div className="flex flex-row lg:flex-col gap-4 items-start justify-between">

@@ -30,7 +30,9 @@ export default async function MyCart() {
 
 async function getPageProps() {
   try {
-    const [user] = await Promise.all([checkTokenAuth()]);
+    const [user] = await Promise.all([
+      checkTokenAuth(),
+    ]);
     return { user };
   } catch (error) {
     console.log(error);
