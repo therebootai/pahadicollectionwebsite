@@ -11,6 +11,7 @@ import VideoMeet from "@/svg/vieoMeet";
 import MobileFixFooter from "@/ui/MobileFixFooter";
 import Tooltip from "@/ui/Tooltip";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { IoMdRadioButtonOn } from "react-icons/io";
@@ -58,6 +59,8 @@ const ProductDetailsPageNameSection = ({
 
   const { user, dispatch } = useContext(AuthContext);
 
+  const router = useRouter();
+
   async function addProductToCart() {
     try {
       if (!user) {
@@ -65,13 +68,14 @@ const ProductDetailsPageNameSection = ({
       }
       const cartAdded = await addToCart(user._id, productId, 1);
       if (cartAdded.message) {
-        throw new Error(cartAdded.response.data.message);
+        throw new Error(cartAdded.message);
       }
       toast.success("Product added to Cart");
       dispatch({
         type: "LOGIN",
         payload: { ...user, cart: cartAdded },
       });
+      router.push("/my-interaction/my-cart");
     } catch (error) {
       console.log(error);
       toast.error(error.message);

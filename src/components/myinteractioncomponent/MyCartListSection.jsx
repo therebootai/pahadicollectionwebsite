@@ -101,6 +101,7 @@ const MyCartListSection = ({ user }) => {
         type: "LOGIN",
         payload: { ...user, cart: cardRemoved },
       });
+      setCart(cardRemoved);
     } catch (error) {
       console.log(error);
     }
@@ -139,10 +140,10 @@ const MyCartListSection = ({ user }) => {
                 </h1>
                 <div className="flex flex-row items-center gap-4">
                   <div className="md:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs md:text-base font-medium flex justify-center items-center px-2 md:px-4 rounded-full">
-                    &#8377; {item.productId?.price}
+                    &#8377; {Math.round(item.productId?.price)}
                   </div>
                   <div className="text-custom-gray text-xs md:text-base font-medium line-through hidden md:block">
-                    &#8377; {item.productId?.mrp}
+                    &#8377; {Math.round(item.productId?.mrp)}
                   </div>
                 </div>
               </div>
@@ -183,7 +184,7 @@ const MyCartListSection = ({ user }) => {
                   Price &#40;
                   {totalQuantity} items&#41;
                 </h4>
-                <h4 className="">₹ {totalPrice}</h4>
+                <h4 className="">₹ {Math.round(totalPrice)}</h4>
               </div>
               <div className="flex justify-between text-custom-gray xlg:text-lg md:text-base text-sm">
                 <h4 className="">Delivery Charge</h4>
@@ -194,7 +195,7 @@ const MyCartListSection = ({ user }) => {
           <OrderDetailsCard.Footer>
             <div className="flex justify-between text-custom-gray xlg:text-lg md:text-base text-sm">
               <h4 className="text-custom-darkgreen">Total Amount</h4>
-              <h4 className="">₹ {totalPrice + 40}</h4>
+              <h4 className="">₹ {Math.round(totalPrice + 40)}</h4>
             </div>
           </OrderDetailsCard.Footer>
         </OrderDetailsCard>
@@ -206,7 +207,7 @@ const MyCartListSection = ({ user }) => {
           type="button"
           className="text-white bg-custom-darkgreen xlg:py-5 md:py-4 py-3 xlg:text-2xl md:text-xl text-lg text-center"
         >
-          Pay ₹{totalPrice + 40}
+          Pay ₹{Math.round(totalPrice + 40)}
         </Link>
       </div>
     </div>

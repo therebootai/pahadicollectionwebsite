@@ -1,5 +1,6 @@
 import Popup from "@/ui/PopUp";
 import ProfileCard from "@/ui/ProfileCard";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function OrderAddressPlace({
@@ -74,6 +75,12 @@ export default function OrderAddressPlace({
             )}
           </div>
         ))}
+        <Link
+          href="/my-profile/manage-address"
+          className="text-custom-gold xlg:text-lg text-base inline relative ps-4 underline border-t border-[#ddd]"
+        >
+          Add new Address
+        </Link>
       </Popup>
     </>
   );

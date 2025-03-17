@@ -18,12 +18,13 @@ const MyWishListSection = ({ user }) => {
           type: "LOGIN",
           payload: { ...user, wishlist: response.wishlist },
         });
+        user.wishlist = response.wishlist;
       }
     } catch (error) {
       console.error("Error removing from wishlist:", error.message);
     }
   };
-  
+
   if (user.wishlist.length === 0) {
     return <div>No items in your wishlist</div>;
   }
@@ -57,10 +58,10 @@ const MyWishListSection = ({ user }) => {
                 </h1>
                 <div className="flex flex-row items-center gap-4">
                   <div className="md:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs md:text-base font-medium flex justify-center items-center px-2 md:px-4 rounded-full">
-                    &#8377; {item.price}
+                    &#8377; {Math.round(item.price)}
                   </div>
                   <div className="text-custom-gray text-xs md:text-base font-medium line-through">
-                    &#8377; {item.mrp}
+                    &#8377; {Math.round(item.mrp)}
                   </div>
                 </div>
               </div>

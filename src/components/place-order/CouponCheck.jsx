@@ -13,7 +13,7 @@ export default function CouponCheck({ setCoupon }) {
     try {
       const coupon = await useCoupon(couponCode);
       if (coupon.message) {
-        throw new Error(coupon.response.data.message);
+        throw new Error(coupon.message);
       }
       toast.success("Coupon applied successfully");
       setCoupon(coupon);

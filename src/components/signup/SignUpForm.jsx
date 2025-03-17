@@ -122,6 +122,7 @@ export default function SignUpForm() {
           type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Enter Your Password"
+          pattern="^\S+$"
           className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
           required
         />

@@ -29,19 +29,18 @@ export async function loginCustomer(email_or_phone, password) {
     return customer;
   } catch (error) {
     console.log(error);
-    return error;
+    return error.response.data ?? {};
   }
 }
 
 export async function signupCustomer(customer) {
-  const { name, email, mobile, password, address } = customer;
+  const { name, email, mobile, password } = customer;
   try {
     const response = await axiosFetch.post(`/customers/`, {
       name,
       email,
       mobile,
       password,
-      address: [address],
     });
     const setCookieHeader = response.headers["set-cookie"];
     if (setCookieHeader && Array.isArray(setCookieHeader)) {
@@ -63,7 +62,7 @@ export async function signupCustomer(customer) {
     return customer;
   } catch (error) {
     console.log(error);
-    return error;
+    return error.response.data ?? {};
   }
 }
 
@@ -82,7 +81,7 @@ export async function logoutCustomer() {
     return response.data;
   } catch (error) {
     console.log(error);
-    return error;
+    return error.response.data ?? {};
   }
 }
 
@@ -102,11 +101,13 @@ export async function checkTokenAuth() {
 
     const { user } = response.data;
     if (!user) {
+      (await cookies()).delete("token");
       return false;
     }
     return user;
   } catch (error) {
     console.log(error);
+    (await cookies()).delete("token");
     return false;
   }
 }
