@@ -17,7 +17,11 @@ export default function AddressesList({
       const customer = await updateCustomer(user._id, {
         address: user.address.filter((add) => add !== address),
       });
+      if (customer.message) {
+        throw new Error(customer.message);
+      }
       toast.success("Updated Successfully");
+      user.address = customer.address;
       login(customer);
     } catch (error) {
       console.log(error);

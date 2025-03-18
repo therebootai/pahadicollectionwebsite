@@ -65,8 +65,8 @@ export default function AddAndEditAddress({
       const customer = await updateCustomer(user._id, {
         address: updatedAddresses,
       });
-      if (customer.response) {
-        throw new Error(customer.response.data.message);
+      if (customer.message) {
+        throw new Error(customer.message);
       }
       toast.success("Updated Successfully");
       user.address = customer.address;
