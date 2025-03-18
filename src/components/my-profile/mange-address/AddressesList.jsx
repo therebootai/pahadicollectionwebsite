@@ -18,6 +18,7 @@ export default function AddressesList({
         address: user.address.filter((add) => add !== address),
       });
       toast.success("Updated Successfully");
+      user.address = customer.address;
       login(customer);
     } catch (error) {
       console.log(error);
