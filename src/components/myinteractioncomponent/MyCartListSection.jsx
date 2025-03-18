@@ -26,7 +26,7 @@ const MyCartListSection = ({ user }) => {
       const quantity = 1;
       const cartAdded = await addToCart(user._id, productId, quantity);
       if (cartAdded.message) {
-        throw new Error(cartAdded.response.data.message);
+        throw new Error(cartAdded.message);
       }
       dispatch({
         type: "LOGIN",
@@ -56,7 +56,7 @@ const MyCartListSection = ({ user }) => {
         1
       );
       if (cardRemoved.message) {
-        throw new Error(cardRemoved.response.data.message);
+        throw new Error(cardRemoved.message);
       }
       dispatch({
         type: "LOGIN",
@@ -95,7 +95,7 @@ const MyCartListSection = ({ user }) => {
     try {
       const cardRemoved = await removeFromCart(user._id, productId, quantity);
       if (cardRemoved.message) {
-        throw new Error(cardRemoved.response.data.message);
+        throw new Error(cardRemoved.message);
       }
       dispatch({
         type: "LOGIN",
