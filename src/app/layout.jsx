@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import AuthContextProvider from "@/context/AuthContext";
 import { Marcellus } from "next/font/google";
 import "./globals.css";
