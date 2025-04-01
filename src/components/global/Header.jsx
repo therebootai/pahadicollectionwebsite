@@ -159,7 +159,9 @@ const Header = () => {
 
       <Link href={"/"}>
         <Image
-          src={"/images/pahadilogo.png"}
+          src={
+            logo ? logo.component_image.secure_url : "/images/pahadilogo.png"
+          }
           alt="logo"
           width={1224}
           height={133}
