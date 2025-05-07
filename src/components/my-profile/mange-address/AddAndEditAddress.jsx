@@ -1,15 +1,17 @@
 import { updateCustomer } from "@/actions/customerActions";
 import { AuthContext } from "@/context/AuthContext";
 import MiniLoader from "@/ui/MiniLoader";
-import { useActionState, useContext } from "react";
+import { useActionState, useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AddAndEditAddress({
   editedAddress = null,
   setShowAddressForm,
   setEditedAddress,
+  user,
 }) {
-  const { user, login } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
+  const [addressType, setAddressType] = useState("home");
   async function updateCustomerAddress(prevState, formState) {
     const house_no = formState.get("house_no") || "";
     const street_name = formState.get("street_name") || "";
@@ -63,10 +65,11 @@ export default function AddAndEditAddress({
       const customer = await updateCustomer(user._id, {
         address: updatedAddresses,
       });
-      if (customer.response) {
-        throw new Error(customer.response.data.message);
+      if (customer.message) {
+        throw new Error(customer.message);
       }
       toast.success("Updated Successfully");
+      user.address = customer.address;
       login(customer);
       setShowAddressForm(false);
       setEditedAddress(null);
@@ -81,7 +84,7 @@ export default function AddAndEditAddress({
   const [formState, formAction, isPending] = useActionState(
     updateCustomerAddress,
     {
-      type: editedAddress?.type || "home",
+      type: addressType,
     }
   );
 
@@ -158,8 +161,8 @@ export default function AddAndEditAddress({
                 id={type}
                 className="appearance-none checked:accent-white checked:ring-custom-gold size-4 rounded-full ring-4 ring-custom-gray"
                 value={type}
-                checked={formState.type === type}
-                onChange={(e) => formAction({ type: e.target.value })}
+                defaultChecked={formState.type === type}
+                onChange={(e) => setAddressType(e.target.value)}
               />
               <label
                 htmlFor={type}

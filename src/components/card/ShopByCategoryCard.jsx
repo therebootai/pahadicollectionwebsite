@@ -14,7 +14,7 @@ const ShopByCategoryCard = ({ categoryimg, catgeoryName, categoryLink }) => {
         />
       </div>
       <div className="p-4 flex-grow justify-between rounded rounded-t-none flex flex-col gap-4 border-x border-b border-[#2222221A]  items-center">
-        <div className=" text-base lg:text-lg text-custom-darkgreen font-medium ">
+        <div className="text-base lg:text-lg text-custom-darkgreen font-medium text-center">
           {catgeoryName}
         </div>
         <Link

@@ -1,4 +1,5 @@
-import axiosFetch from "@/config/axios.config";
+"use client";
+import { checkTokenAuth } from "@/actions/authActions";
 import { createContext, useEffect, useReducer } from "react";
 
 const authState = {
@@ -25,18 +26,16 @@ const AuthContextProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const response = await axiosFetch.get(`/customers/check-auth`);
+      const user = await checkTokenAuth();
 
-      if (response.data.user) {
-        dispatch({ type: "LOGIN", payload: response.data.user });
+      if (user) {
+        dispatch({ type: "LOGIN", payload: user });
       } else {
         dispatch({ type: "LOGOUT" });
-        // navigate("/login");
       }
     } catch (error) {
       console.error("Authentication check failed:", error);
       dispatch({ type: "LOGOUT" });
-      // navigate("/login");
     }
   };
 

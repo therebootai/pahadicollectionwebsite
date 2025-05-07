@@ -1,3 +1,4 @@
+"use client";
 import { removeWishlist } from "@/actions/customerActions";
 import { AuthContext } from "@/context/AuthContext";
 import Image from "next/image";
@@ -5,8 +6,8 @@ import Link from "next/link";
 import React, { useContext } from "react";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 
-const MyWishListSection = () => {
-  const { user, dispatch } = useContext(AuthContext);
+const MyWishListSection = ({ user }) => {
+  const { dispatch } = useContext(AuthContext);
 
   const handleDelete = async (productId) => {
     try {
@@ -17,14 +18,13 @@ const MyWishListSection = () => {
           type: "LOGIN",
           payload: { ...user, wishlist: response.wishlist },
         });
+        user.wishlist = response.wishlist;
       }
     } catch (error) {
       console.error("Error removing from wishlist:", error.message);
     }
   };
-  if (!user) {
-    return <div></div>;
-  }
+
   if (user.wishlist.length === 0) {
     return <div>No items in your wishlist</div>;
   }
@@ -39,27 +39,29 @@ const MyWishListSection = () => {
           >
             <Link
               href={`/products/${item.slug}`}
-              className="w-[90%]  flex flex-col md:flex-row gap-4"
+              className="md:w-[90%] flex flex-row gap-4 flex-1"
             >
-              <div className="w-[15%] h-full relative ">
+              <div className="w-[25%] md:w-[15%] md:h-full relative shrink-0 ">
                 <Image
                   src={item.thumbnail_image.secure_url}
                   alt=""
                   fill
-                  className="object-contain"
+                  className="object-cover md:object-contain"
                 />
               </div>
-              <div className="w-[80%] flex flex-col gap-1">
-                <h1 className=" text-xl font-medium text-custom-darkgreen">
+              <div className="md:w-[80%] flex flex-col gap-1 flex-1">
+                <h1 className="text-base md:text-xl font-medium text-custom-darkgreen">
                   {item.title}
                 </h1>
-                <h1 className=" text-base line-clamp-2 ">{item.description}</h1>
+                <h1 className=" text-base md:line-clamp-2 hidden">
+                  {item.description}
+                </h1>
                 <div className="flex flex-row items-center gap-4">
                   <div className="md:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs md:text-base font-medium flex justify-center items-center px-2 md:px-4 rounded-full">
-                    &#8377; {item.price}
+                    &#8377; {Math.round(item.price)}
                   </div>
                   <div className="text-custom-gray text-xs md:text-base font-medium line-through">
-                    &#8377; {item.mrp}
+                    &#8377; {Math.round(item.mrp)}
                   </div>
                 </div>
               </div>

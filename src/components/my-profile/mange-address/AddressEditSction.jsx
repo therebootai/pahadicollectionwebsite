@@ -1,10 +1,13 @@
+"use client";
 import { IoAdd } from "react-icons/io5";
 import AddAndEditAddress from "./AddAndEditAddress";
 import AddressesList from "./AddressesList";
 import { useState } from "react";
 
-export default function AddressEditSction() {
-  const [showAddressForm, setShowAddressForm] = useState(false);
+export default function AddressEditSction({ user }) {
+  const [showAddressForm, setShowAddressForm] = useState(
+    user?.address?.length > 0 ? false : true
+  );
   const [editedAddress, setEditedAddress] = useState(null);
 
   return (
@@ -22,11 +25,13 @@ export default function AddressEditSction() {
           editedAddress={editedAddress}
           setShowAddressForm={setShowAddressForm}
           setEditedAddress={setEditedAddress}
+          user={user}
         />
       )}
       <AddressesList
         setEditedAddress={setEditedAddress}
         setShowAddressForm={setShowAddressForm}
+        user={user}
       />
     </div>
   );

@@ -28,7 +28,7 @@ export async function updateCustomer(customerId, customerData) {
     return customer;
   } catch (error) {
     console.log(error);
-    return error;
+    return error.response.data ?? {};
   }
 }
 
@@ -71,7 +71,7 @@ export async function addToCart(customerId, productId, quantity) {
     return cart;
   } catch (error) {
     console.error("Error updating cart:", error.message);
-    return error;
+    return error.response.data ?? [];
   }
 }
 export async function removeFromCart(customerId, productId, quantity) {
@@ -85,6 +85,6 @@ export async function removeFromCart(customerId, productId, quantity) {
     return cart;
   } catch (error) {
     console.error("Error updating cart:", error.message);
-    return error;
+    return error.response.data ?? [];
   }
 }

@@ -1,11 +1,16 @@
+"use client";
 import { loginCustomer } from "@/actions/authActions";
 import { AuthContext } from "@/context/AuthContext";
 import MiniLoader from "@/ui/MiniLoader";
-import { useActionState, useContext } from "react";
+import { useRouter } from "next/navigation";
+import { useActionState, useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function LoginForm() {
   const { login } = useContext(AuthContext);
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (prevState, formData) => {
     const email_or_phone = formData.get("email_or_phone");
@@ -13,11 +18,12 @@ export default function LoginForm() {
 
     try {
       const customer = await loginCustomer(email_or_phone, password);
-      if (customer.response) {
-        throw new Error(customer.response.data.message);
+      if (customer.message && customer.message !== "Login successful") {
+        throw new Error(customer.message);
       }
       toast.success("Logged in successfully");
       login(customer);
+      router.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -36,15 +42,24 @@ export default function LoginForm() {
         type="text"
         name="email_or_phone"
         placeholder="Email or Phone"
+        pattern="^\S+$"
         className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
       />
       <div className="flex relative flex-1">
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           name="password"
           placeholder="Password"
+          pattern="^\S+$"
           className="p-2 md:p-4 xlg:p-6 bg-white text-custom-darkgreen placeholder:text-custom-darkgreen w-full"
         />
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="mr-4 text-xl text-custom-darkgreen cursor-pointer absolute right-0 top-1/2 transform -translate-y-1/2"
+        >
+          {showPassword ? <FiEyeOff /> : <FiEye />}
+        </button>
       </div>
       <button
         type="submit"

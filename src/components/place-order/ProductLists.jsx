@@ -4,13 +4,16 @@ export default function ProductsList({ products, onUpdateQuantity }) {
   return (
     <div className="flex flex-col xlg:gap-6 md:gap-5 gap-4">
       {products.map((item) => (
-        <ProfileCard key={item.productId}>
+        <ProfileCard key={item.productId} className="flex-col md:flex-row">
           <ProfileCard.Cover
             src={item.thumbnail_image?.secure_url}
             alt={item.slug}
             width={103}
             height={103}
-            coverProps={{ className: "rounded-sm w-25 object-cover" }}
+            coverProps={{
+              className:
+                "rounded-sm w-full h-60 md:h-auto md:w-24 object-cover",
+            }}
           />
           <ProfileCard.Box
             boxProps={{ className: "flex flex-col gap-4 flex-1" }}

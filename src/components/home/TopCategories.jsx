@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import HeadingComponent from "../global/HeadingComponent";
 import Slider from "react-slick";
@@ -65,7 +66,7 @@ const TopCategories = ({ categories }) => {
           {categories.map((item, index) => (
             <div key={index} className="!flex justify-center items-center">
               <Link
-                href={`/products?category=${encodeURIComponent(
+                href={`/products?page=1&category=${encodeURIComponent(
                   item.mainCategory
                 )}`}
                 className="w-[95%]"

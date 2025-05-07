@@ -1,3 +1,4 @@
+"use client";
 import { useContext, useEffect, useState } from "react";
 import ProductsList from "./ProductLists";
 import OrderDetailsCard from "@/ui/OrderDetailsCard";
@@ -6,6 +7,8 @@ import { toast } from "react-toastify";
 import { AuthContext } from "@/context/AuthContext";
 import { placeOrder } from "@/actions/orderActions";
 import OrderAddressPlace from "./OrderAddressPlace";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function PlaceOrderSection({ products }) {
   const [orderedProducts, setOrderedProducts] = useState(
@@ -16,6 +19,7 @@ export default function PlaceOrderSection({ products }) {
   );
 
   const [coupon, setCoupon] = useState(null);
+  const router = useRouter();
 
   const [deliveryLocation, setDeliveryLocation] = useState({});
 
@@ -43,7 +47,9 @@ export default function PlaceOrderSection({ products }) {
   );
 
   useEffect(() => {
-    setDeliveryLocation(user.address[0]);
+    if (user.address?.length > 0) {
+      setDeliveryLocation(user.address[0]);
+    }
     setOrderedProducts((prevOrderedProducts) =>
       prevOrderedProducts.map((product) => {
         const cartItem = user.cart.find(
@@ -55,6 +61,10 @@ export default function PlaceOrderSection({ products }) {
   }, [user]);
 
   async function handelPlaceOrder() {
+    if (Object.keys(deliveryLocation).length <= 0) {
+      toast.error("You have not add any address.");
+      return;
+    }
     try {
       const order = await placeOrder({
         customerId: user._id,
@@ -68,9 +78,10 @@ export default function PlaceOrderSection({ products }) {
       });
 
       if (order.message) {
-        throw new Error(order.response.data.message);
+        throw new Error(order.message);
       }
       toast.success("Order Placed Successfully");
+      router.push(`/my-orders`);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -78,19 +89,28 @@ export default function PlaceOrderSection({ products }) {
   }
 
   return (
-    <div className="flex gap-6 flex-1 items-start">
-      <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
-        <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
-          <h1 className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen">
-            Delivery Address
-          </h1>
-          <OrderAddressPlace
-            address={deliveryLocation}
-            name={user.name}
-            setDeliveryLocation={setDeliveryLocation}
-            allAddresses={user.address}
-          />
-        </div>
+    <div className="flex flex-col-reverse lg:flex-row gap-6 flex-1 items-start">
+      <div className="flex flex-col-reverse lg:flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
+        {Object.keys(deliveryLocation).length > 0 ? (
+          <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
+            <h1 className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen">
+              Delivery Address
+            </h1>
+            <OrderAddressPlace
+              address={deliveryLocation}
+              name={user.name}
+              setDeliveryLocation={setDeliveryLocation}
+              allAddresses={user.address}
+            />
+          </div>
+        ) : (
+          <Link
+            href="/my-profile/manage-address"
+            className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen"
+          >
+            Add new Address
+          </Link>
+        )}
         <div className="flex flex-col xlg:gap-7 md:gap-6 gap-4 flex-1">
           <h1 className="xlg:text-2xl md:text-xl text-lg text-custom-darkgreen">
             Order Summary
@@ -119,7 +139,7 @@ export default function PlaceOrderSection({ products }) {
                   Price &#40;
                   {totalQuantity} items&#41;
                 </h4>
-                <h4 className="">₹ {totalPrice}</h4>
+                <h4 className="">₹ {Math.round(totalPrice)}</h4>
               </div>
               <div className="flex justify-between text-custom-gray xlg:text-lg md:text-base text-sm">
                 <h4 className="">Coupon Code</h4>

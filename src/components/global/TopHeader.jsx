@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 import {
   FaFacebookF,
   FaInstagram,
@@ -32,13 +31,13 @@ const TopHeader = () => {
           ))}
         </div>
         <div className="xlg:text-xl text-base  text-custom-darkgreen">
-          Sale up to 20% in this holiday. Shop Now!
+          Exclusive Flash Sale: Up to 10% Off on Handmade Jewelry!
         </div>
         <Link
-          href={""}
+          href="mailto:pahadicollections124@gmail.com"
           className="xlg:text-xl text-base  text-custom-darkgreen"
         >
-          contact@website.com
+          pahadicollections124@gmail.com
         </Link>
       </div>
     </div>

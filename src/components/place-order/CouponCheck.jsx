@@ -13,7 +13,7 @@ export default function CouponCheck({ setCoupon }) {
     try {
       const coupon = await useCoupon(couponCode);
       if (coupon.message) {
-        throw new Error(coupon.response.data.message);
+        throw new Error(coupon.message);
       }
       toast.success("Coupon applied successfully");
       setCoupon(coupon);
@@ -39,7 +39,7 @@ export default function CouponCheck({ setCoupon }) {
       />
       <button
         type="submit"
-        className="bg-[#FFCD91] text-custom-darkgreen xlg:py-5 md:py-4 py-3 xlg:w-36 md:w-28 w-16 rounded-sm"
+        className="bg-[#FFCD91] text-custom-darkgreen xlg:py-5 md:py-4 py-3 xlg:w-36 w-28 rounded-sm inline-flex items-center justify-center gap-4"
       >
         {isPending && <MiniLoader />} Apply
       </button>

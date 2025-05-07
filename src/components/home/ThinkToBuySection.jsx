@@ -1,5 +1,7 @@
+"use client";
 import useElementHeight from "@/hooks/useElementHeight";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const ThinkToBuySection = () => {
@@ -54,20 +56,23 @@ const ThinkToBuySection = () => {
                 Are Think Buy Our Products
               </h1>
               <p className=" text-center text-white text-base md:text-sm lg:text-base xlg:text-lg">
-                Lorem ipsum dolor sit amet consectetur. Gravida erat facilisis
-                habitant integer aliquet. Platea enim arcu pretium malesuada.
-                Faucibus massa pellentesque egestas vestibulum tortor
-                pellentesque sagittis ultricies. Neque feugiat commodo mi
-                feugiat nunc egestas sodales quam. Et imperdiet dolor in
-                vestibulum quis diam vel suspendisse. Enim netus eu id
+                Pahadi Collection ensures the highest quality in every piece,
+                meticulously crafted by skilled artisans. With a commitment to
+                excellence, they use premium materials and fine techniques,
+                guaranteeing durability and elegance. As one of the
+                fastest-growing jewellery brands, Pahadi Collection continues to
+                redefine timeless beauty and customer satisfaction.
               </p>
               <div className=" grid grid-cols-2 lg:gap-6 gap-4 xlg:gap-8 w-full">
                 <button className=" h-[3rem] w-full flex justify-center items-center rounded-sm bg-gradient-to-r from-custom-gold to-custom-darkgold md:text-sm text-base lg:text-lg text-white font-medium">
                   Arrange a Call
                 </button>
-                <button className=" h-[3rem] w-full flex justify-center items-center rounded-sm bg-gradient-to-r from-custom-gold to-custom-darkgold md:text-sm text-base lg:text-lg text-white font-medium">
+                <Link
+                  className=" h-[3rem] w-full flex justify-center items-center rounded-sm bg-gradient-to-r from-custom-gold to-custom-darkgold md:text-sm text-base lg:text-lg text-white font-medium"
+                  href="/products?page=1"
+                >
                   Explorer Now
-                </button>
+                </Link>
               </div>
             </div>
           </div>

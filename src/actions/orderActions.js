@@ -24,7 +24,7 @@ export async function placeOrder({
     return order;
   } catch (error) {
     console.log(error);
-    return error;
+    return error.response.data ?? {};
   }
 }
 
@@ -35,6 +35,6 @@ export async function getOrdersOfUser(customerId) {
     return orders;
   } catch (error) {
     console.log(error);
-    return error;
+    return errorresponse.data ?? [];
   }
 }

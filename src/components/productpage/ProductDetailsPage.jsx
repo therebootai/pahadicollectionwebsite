@@ -1,6 +1,5 @@
+"use client";
 import React, { useContext, useEffect, useState } from "react";
-import MainPageTemplate from "@/templates/MainPageTemplate";
-import SubPageBanner from "../global/SubPageBanner";
 import SinglePageImagesComponent from "./SingleProductImagesComponent";
 import ProductDetailsPageNameSection from "./ProductDetailsPageNameSection";
 import ProductPageHeadingIcon from "@/svg/productPageHeadingIcon";
@@ -26,6 +25,7 @@ const ProductDetailsPage = ({
   stock,
   products,
   category,
+  coupons,
 }) => {
   const [activeSection, setActiveSection] = useState("description");
 
@@ -93,6 +93,7 @@ const ProductDetailsPage = ({
             isWishlisted={isWishlisted}
             handleWishlist={handleWishlist}
             stock={stock}
+            coupons={coupons}
           />
         </div>
       </div>
@@ -150,7 +151,7 @@ const ProductDetailsPage = ({
             </span>
           </h1>
           <Link
-            href={`/products?category=${encodeURIComponent(category)}`}
+            href={`/products?page=1&category=${encodeURIComponent(category)}`}
             className=" text-sm xlg:text-lg font-medium text-custom-darkgreen"
           >
             View {category} &#x226B;

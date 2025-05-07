@@ -1,3 +1,4 @@
+"use client";
 import { addToCart, removeFromCart } from "@/actions/customerActions";
 import { AuthContext } from "@/context/AuthContext";
 import OrderDetailsCard from "@/ui/OrderDetailsCard";
@@ -8,7 +9,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { toast } from "react-toastify";
 
-const MyCartListSection = () => {
+const MyCartListSection = ({ user }) => {
   const [cart, setCart] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -25,13 +26,12 @@ const MyCartListSection = () => {
       const quantity = 1;
       const cartAdded = await addToCart(user._id, productId, quantity);
       if (cartAdded.message) {
-        throw new Error(cartAdded.response.data.message);
+        throw new Error(cartAdded.message);
       }
       dispatch({
         type: "LOGIN",
         payload: { ...user, cart: cartAdded },
       });
-      console.log(quantity);
 
       setCart((prevCart) =>
         prevCart.map((item, i) =>
@@ -56,7 +56,7 @@ const MyCartListSection = () => {
         1
       );
       if (cardRemoved.message) {
-        throw new Error(cardRemoved.response.data.message);
+        throw new Error(cardRemoved.message);
       }
       dispatch({
         type: "LOGIN",
@@ -74,7 +74,7 @@ const MyCartListSection = () => {
     }
   };
 
-  const { user, dispatch } = useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   useEffect(() => {
     setCart(user.cart);
@@ -95,58 +95,62 @@ const MyCartListSection = () => {
     try {
       const cardRemoved = await removeFromCart(user._id, productId, quantity);
       if (cardRemoved.message) {
-        throw new Error(cardRemoved.response.data.message);
+        throw new Error(cardRemoved.message);
       }
       dispatch({
         type: "LOGIN",
         payload: { ...user, cart: cardRemoved },
       });
+      setCart(cardRemoved);
     } catch (error) {
       console.log(error);
     }
   }
-  
+
+  if (user.cart.length === 0) {
+    return <div>No items in your cart</div>;
+  }
 
   return (
-    <div className="flex gap-6 items-start">
+    <div className="flex gap-6 flex-col-reverse lg:flex-row lg:items-start flex-1">
       <div className="flex flex-col gap-4 flex-1">
         {cart.map((item, index) => (
           <div
             key={index}
-            className="p-6 flex flex-row gap-4 border border-custom-light-gray hover:shadow-custom-light hover:border-none rounded-sm"
+            className="p-4 md:p-6 flex flex-col md:flex-row gap-4 border border-custom-light-gray hover:shadow-custom-light hover:border-none rounded-sm"
           >
             <Link
               href={`/products/${item.productId?.slug}`}
-              className="w-[85%] flex flex-row gap-4"
+              className="md:w-[85%] flex flex-row gap-4"
             >
-              <div className="w-[15%] h-full relative">
+              <div className="w-[40%] md:w-[15%] h-32 md:h-full relative">
                 <Image
                   src={item.productId?.thumbnail_image?.secure_url}
                   alt=""
                   fill
-                  className="object-contain"
+                  className="object-cover md:object-contain"
                 />
               </div>
-              <div className="w-[80%] flex flex-col gap-1">
-                <h1 className="text-xl font-medium text-custom-darkgreen">
+              <div className="md:w-[80%] flex flex-col gap-1">
+                <h1 className="text-lg md:text-xl font-medium text-custom-darkgreen">
                   {item.productId?.title}
                 </h1>
-                <h1 className="text-base line-clamp-2">
+                <h1 className="text-base md:line-clamp-2 hidden">
                   {item.productId?.description}
                 </h1>
                 <div className="flex flex-row items-center gap-4">
                   <div className="md:h-[2rem] h-[1.7rem] bg-custom-yellow text-custom-darkgreen text-xs md:text-base font-medium flex justify-center items-center px-2 md:px-4 rounded-full">
-                    &#8377; {item.productId?.price}
+                    &#8377; {Math.round(item.productId?.price)}
                   </div>
-                  <div className="text-custom-gray text-xs md:text-base font-medium line-through">
-                    &#8377; {item.productId?.mrp}
+                  <div className="text-custom-gray text-xs md:text-base font-medium line-through hidden md:block">
+                    &#8377; {Math.round(item.productId?.mrp)}
                   </div>
                 </div>
               </div>
             </Link>
-            <div className="w-[15%] flex flex-col justify-between items-end">
+            <div className="md:w-[15%] flex flex-row md:flex-col justify-between items-end">
               <button
-                className="text-2xl flex justify-end items-start text-custom-darkgreen"
+                className="text-lg md:text-2xl flex justify-end items-start text-custom-darkgreen"
                 onClick={() =>
                   handelRemoveCart(item.productId._id, item.quantity)
                 }
@@ -157,7 +161,7 @@ const MyCartListSection = () => {
                 <button onClick={() => handleDecrease(index)}>
                   <FaMinus />
                 </button>
-                <div className="w-[5rem] h-[2rem] bg-custom-light-gray border border-[#dddddd] flex justify-center items-center text-lg font-medium text-custom-darkgreen px-6">
+                <div className="w-10 md:w-[5rem] h-[2rem] bg-custom-light-gray border border-[#dddddd] flex justify-center items-center text-base md:text-lg font-medium text-custom-darkgreen px-6">
                   {item.quantity.toString().padStart(2, "0")}
                 </div>
                 <button onClick={() => handleIncrease(index)}>
@@ -180,7 +184,7 @@ const MyCartListSection = () => {
                   Price &#40;
                   {totalQuantity} items&#41;
                 </h4>
-                <h4 className="">₹ {totalPrice}</h4>
+                <h4 className="">₹ {Math.round(totalPrice)}</h4>
               </div>
               <div className="flex justify-between text-custom-gray xlg:text-lg md:text-base text-sm">
                 <h4 className="">Delivery Charge</h4>
@@ -191,7 +195,7 @@ const MyCartListSection = () => {
           <OrderDetailsCard.Footer>
             <div className="flex justify-between text-custom-gray xlg:text-lg md:text-base text-sm">
               <h4 className="text-custom-darkgreen">Total Amount</h4>
-              <h4 className="">₹ {totalPrice + 40}</h4>
+              <h4 className="">₹ {Math.round(totalPrice + 40)}</h4>
             </div>
           </OrderDetailsCard.Footer>
         </OrderDetailsCard>
@@ -203,7 +207,7 @@ const MyCartListSection = () => {
           type="button"
           className="text-white bg-custom-darkgreen xlg:py-5 md:py-4 py-3 xlg:text-2xl md:text-xl text-lg text-center"
         >
-          Pay ₹{totalPrice + 40}
+          Pay ₹{Math.round(totalPrice + 40)}
         </Link>
       </div>
     </div>

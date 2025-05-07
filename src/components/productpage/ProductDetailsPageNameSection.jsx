@@ -8,7 +8,10 @@ import LiveAssistance from "@/svg/liveAssistance";
 import PaymentOption from "@/svg/paymentOption";
 import SecuredShoping from "@/svg/securedShoping";
 import VideoMeet from "@/svg/vieoMeet";
+import MobileFixFooter from "@/ui/MobileFixFooter";
+import Tooltip from "@/ui/Tooltip";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import { IoMdRadioButtonOn } from "react-icons/io";
@@ -25,6 +28,7 @@ const ProductDetailsPageNameSection = ({
   isWishlisted,
   handleWishlist,
   stock,
+  coupons,
 }) => {
   const benifits = [
     {
@@ -55,17 +59,23 @@ const ProductDetailsPageNameSection = ({
 
   const { user, dispatch } = useContext(AuthContext);
 
+  const router = useRouter();
+
   async function addProductToCart() {
     try {
+      if (!user) {
+        throw new Error("You're not logged in");
+      }
       const cartAdded = await addToCart(user._id, productId, 1);
       if (cartAdded.message) {
-        throw new Error(cartAdded.response.data.message);
+        throw new Error(cartAdded.message);
       }
       toast.success("Product added to Cart");
       dispatch({
         type: "LOGIN",
         payload: { ...user, cart: cartAdded },
       });
+      router.push("/my-interaction/my-cart");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -99,10 +109,32 @@ const ProductDetailsPageNameSection = ({
         <h1 className=" text-sm md:text-lg  text-custom-darkgold">
           4.6 - (110) Reviews
         </h1>
-        <div className=" text-custom-darkgreen text-sm md:text-lg flex items-center md:gap-1">
-          <IoMdRadioButtonOn />
-          Coupon
-        </div>
+        <Tooltip className="flex">
+          <Tooltip.Trigger className="text-custom-darkgreen text-sm md:text-lg md:gap-1 flex items-center">
+            <IoMdRadioButtonOn />
+            Coupon
+          </Tooltip.Trigger>
+          <Tooltip.Content className="size-fit flex-col xlg:gap-6 md:gap-4 gap-2">
+            {coupons &&
+              coupons.length > 0 &&
+              coupons.map((coupon) => (
+                <div
+                  className="flex flex-col gap-2 border-b border-custom-gray last:border-transparent pb-6 last:pb-0"
+                  key={coupon._id}
+                >
+                  <h1 className="xlg:text-xl md:text-lg text-base capitalize">
+                    {coupon.couponName}
+                  </h1>
+                  <h3 className="md:text-base text-sm">
+                    get {coupon.discount}% off{" "}
+                    <span className="md:text-sm text-xs tracking-wider">
+                      Minimum order of ₹{coupon.minimumAmount}
+                    </span>
+                  </h3>
+                </div>
+              ))}
+          </Tooltip.Content>
+        </Tooltip>
       </div>
       <div className=" flex md:flex-row flex-col  gap-4">
         <div className=" h-[2.5rem] md:h-[3rem] w-[8rem] md:w-[10rem] flex justify-center items-center bg-custom-light-gray  text-custom-darkgreen rounded-sm text-sm md:text-lg ">
@@ -164,7 +196,7 @@ const ProductDetailsPageNameSection = ({
         </div>
 
         {/* Sticky Bottom Buttons for Small Screens */}
-        <div className="lg:hidden fixed bottom-0 left-0 z-[100] right-0 bg-white p-2 flex gap-3 shadow-lg">
+        <MobileFixFooter className="bg-white">
           <button
             className="lg:h-[3rem] h-[2.5rem] w-[45%] flex justify-center items-center bg-gradient-to-r from-custom-gold to-custom-darkgold  text-white rounded-sm text-base lg:text-lg"
             onClick={addProductToCart}
@@ -179,8 +211,9 @@ const ProductDetailsPageNameSection = ({
           </Link>
           <button className=" w-[10%] text-xl">
             {isWishlisted ? <FaHeart /> : <FaRegHeart />}
+            {isWishlisted ? <FaHeart /> : <FaRegHeart />}
           </button>
-        </div>
+        </MobileFixFooter>
       </div>
     </div>
   );

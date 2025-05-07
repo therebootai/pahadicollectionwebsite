@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import { FaStar } from "react-icons/fa6";
 
 const ReviewSection = () => {
@@ -24,34 +23,33 @@ const ReviewSection = () => {
                   className="size-8 float-left"
                 />
                 <p className=" leading-relaxed">
-                  Lorem ipsum dolor sit amet consectetur. Duis tristique
-                  accumsan diam mattis elit duis elementum ut. Sed at ultricies
-                  nunc risus a pellentesque feugiat. Augue condimentum accumsan
-                  in consequat erat ultrices mauris at dictumst. Eget egestas
-                  porttitor in nibh nulla curabitur. Leo ut lacus risus nibh
-                  sollicitudin purus nam proin purus. Quam velit integer
-                  elementum fusce erat mauris amet tortor. Dolor ipsum amet et
-                  eu. Elit justo quis condimentum convallis. Amet vitae sit
-                  adipiscing ullamcorper gravida sed elementum. Amet eget nunc
-                  curabitur quam nullam proin mauris. Aliquet neque vitae
-                  tristique amet. Sit sit consequat libero quam penatibus. Orci
-                  libero eu mauris quam tellus. Leo sed pulvinar egestas dictum
-                  nisl fermentum dui risus ut. Et feugiat vitae leo amet eget
-                  arcu feugiat elementum ut. Elementum eget lorem aenean augue
-                  montes risus vehicula leo auctor. Justo egestas tincidunt
-                  morbi ac suspendisse. Felis velit ornare diam ac. Rutrum proin
-                  hac eu pulvinar neque nullam. Tempor etiam vitae amet viverra
-                  risus blandit cras ultrices magna.
+                  I recently purchased a beautiful set of handmade jewelry from
+                  Pahadi Collection, and I am absolutely thrilled with my
+                  experience! From the moment I visited their store, I was
+                  impressed by the variety of designs, ranging from traditional
+                  to contemporary styles. The craftsmanship is exquisite, and
+                  each piece feels unique and high-quality. I ordered a custom
+                  necklace for a special occasion, and the team was incredibly
+                  helpful throughout the process, ensuring the piece was
+                  perfect. The attention to detail in the jewelry is truly
+                  remarkable, and I received so many compliments on it. Not only
+                  is the jewelry stunning, but the customer service was
+                  top-notch. The staff was friendly, knowledgeable, and helped
+                  me choose pieces that suited my style and needs. The delivery
+                  was fast, and everything was packaged beautifully. I highly
+                  recommend Pahadi Collection to anyone looking for exceptional
+                  handmade jewelry. I&apos;ll definitely be back for more!
                 </p>
               </div>
               <div className=" flex flex-col">
                 <h1 className=" text-xl font-medium">Supriya Tamang</h1>
                 <div className=" flex items-center gap-1">
-                  <FaStar className="text-custom-gold" />
-                  <FaStar className="text-custom-gold" />
-                  <FaStar className="text-custom-gold" />
-                  <FaStar className="text-custom-gold" />
-                  <FaStar className="text-custom-gold" />
+                  {Array(5)
+                    .fill(0)
+                    .map((_, index) => index + 1)
+                    .map((index) => (
+                      <FaStar className="text-custom-gold" key={index} />
+                    ))}
                 </div>
               </div>
             </div>

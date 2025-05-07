@@ -1,17 +1,27 @@
+"use client";
 import { updateCustomer } from "@/actions/customerActions";
 import { AuthContext } from "@/context/AuthContext";
 import InputWithLabel from "@/ui/InputWithLabel";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 
-export default function PersonalDetails() {
-  const { user, login } = useContext(AuthContext);
+export default function PersonalDetails({ user }) {
+  const { login } = useContext(AuthContext);
 
   async function handelInputSubmit(updatedData) {
     try {
       const customer = await updateCustomer(user._id, { ...updatedData });
-      if (customer.response) {
-        throw new Error(customer.response.data.message);
+      if (customer.message) {
+        throw new Error(customer.message);
+      }
+      if (updatedData.name) {
+        user.name = updatedData.name;
+      }
+      if (updatedData.mobile) {
+        user.mobile = updatedData.mobile;
+      }
+      if (updatedData.email) {
+        user.email = updatedData.email;
       }
       toast.success("Updated Successfully");
       login(customer);

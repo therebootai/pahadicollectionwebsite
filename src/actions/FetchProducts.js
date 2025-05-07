@@ -1,3 +1,4 @@
+"use server";
 import axiosFetch from "@/config/axios.config";
 
 export const fetchProductsData = async (
@@ -7,7 +8,7 @@ export const fetchProductsData = async (
   attributes = []
 ) => {
   try {
-    let url = `/products?isActive=true&page=${page}&limit=${limit}`;
+    let url = `/products?isActive=true&page=${page}&limit=${limit}& is_drafted=false`;
 
     if (category) {
       url += `&category=${encodeURIComponent(category)}`;
@@ -19,9 +20,34 @@ export const fetchProductsData = async (
     }
 
     const response = await axiosFetch.get(url);
+
     return response.data;
   } catch (error) {
     console.error("Error fetching Product data:", error.message);
     return { products: [], pagination: {} };
   }
 };
+
+export async function searchProducts({
+  search = "",
+  page = 1,
+  sortBy = "",
+  order = "",
+}) {
+  const query = { page, search, is_drafted: false };
+  if (sortBy !== "") {
+    query.sortBy = sortBy;
+  }
+  if (order !== "") {
+    query.order = order;
+  }
+  try {
+    const response = await axiosFetch.get(`/products/find`, {
+      params: query,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error Search Product:", error.message);
+    return { products: [], pagination: {} };
+  }
+}
