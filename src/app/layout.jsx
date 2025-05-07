@@ -6,8 +6,9 @@ import "./globals.css";
 import { Bounce, ToastContainer } from "react-toastify";
 
 export const metadata = {
-  title: "Home",
-  description: "Welcome to Next.js",
+  title: "Nepali Jewellery Store in Siliguri | Welcome to Pahadi Collection",
+  description:
+    "Discover exquisite handmade jewellery at Pahadi Collection, your premier jewellery store in Siliguri. Shop unique, traditional, and contemporary designs crafted with care. Perfect for every occasion. Visit us today!",
 };
 
 const marcellus = Marcellus({
