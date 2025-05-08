@@ -96,9 +96,8 @@ export default function PlaceOrderSection({ products }) {
     });
 
     const order = await response.json();
-    console.log(order);
     const options = {
-      key: "rzp_test_FAMymxk07pExwQ",
+      key: "rzp_test_oVZNqD19ONokkL",
       amount: order.amount,
       currency: "INR",
       name: "Your Shop Name",

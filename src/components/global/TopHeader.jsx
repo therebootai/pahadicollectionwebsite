@@ -18,8 +18,8 @@ const TopHeader = () => {
   ];
   return (
     <div className="z-[60] w-full ">
-      <div className=" bg-defined-green h-[3rem] hidden md:flex justify-between sm:gap-2 md:gap-0 items-center px-6  text-white">
-        <div className="flex flex-row gap-2 items-center">
+      <div className="h-[3rem] hidden md:flex justify-between sm:gap-2 md:gap-0 items-center px-6  text-white">
+        {/* <div className="flex flex-row gap-2 items-center">
           {socialmedia.map((item, index) => (
             <Link
               href={item.href}
@@ -29,7 +29,7 @@ const TopHeader = () => {
               {item.icons}
             </Link>
           ))}
-        </div>
+        </div> */}
         <div className="xlg:text-xl text-base  text-custom-darkgreen">
           Exclusive Flash Sale: Up to 10% Off on Handmade Jewelry!
         </div>
