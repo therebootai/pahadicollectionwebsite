@@ -9,6 +9,7 @@ import { placeOrder } from "@/actions/orderActions";
 import OrderAddressPlace from "./OrderAddressPlace";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import axiosFetch from "@/config/axios.config";
 
 export default function PlaceOrderSection({ products }) {
   const [orderedProducts, setOrderedProducts] = useState(
@@ -60,33 +61,77 @@ export default function PlaceOrderSection({ products }) {
     );
   }, [user]);
 
-  async function handelPlaceOrder() {
-    if (Object.keys(deliveryLocation).length <= 0) {
-      toast.error("You have not add any address.");
+  // Load Razorpay script dynamically
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async () => {
+    const res = await loadRazorpayScript();
+
+    if (!res) {
+      toast.error("Razorpay SDK failed to load. Are you online?");
       return;
     }
-    try {
-      const order = await placeOrder({
-        customerId: user._id,
-        products: orderedProducts.map((product) => ({
-          productId: product._id,
-          quantity: product.quantity,
-        })),
-        totalAmount: totalPrice,
-        delivery_location: deliveryLocation,
-        couponId: coupon ? coupon._id : null,
-      });
 
-      if (order.message) {
-        throw new Error(order.message);
-      }
-      toast.success("Order Placed Successfully");
-      router.push(`/my-orders`);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
-  }
+    const response = await axiosFetch.post(`/payments/order`, {
+      body: JSON.stringify({
+        amount:
+          Math.round(
+            coupon
+              ? totalPrice + 40 - ((totalPrice + 40) * coupon.discount) / 100
+              : totalPrice + 40
+          ) * 100,
+      }),
+    });
+
+    const order = await response.json();
+    console.log(order);
+    const options = {
+      key: "rzp_test_FAMymxk07pExwQ",
+      amount: order.amount,
+      currency: "INR",
+      name: "Your Shop Name",
+      description: "Order Payment",
+      order_id: order.id,
+      handler: function (response) {
+        toast.success("Payment successful!");
+      },
+      prefill: {
+        name: user.name,
+        email: user.email,
+        contact: user.phone,
+      },
+      notes: {
+        address: deliveryLocation,
+      },
+      theme: {
+        color: "#3399cc",
+      },
+      method: {
+        card: true,
+        upi: true,
+        netbanking: false,
+        wallet: false,
+        paylater: false,
+        emi: false,
+        cod: true,
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
 
   return (
     <div className="flex flex-col-reverse lg:flex-row gap-6 flex-1 items-start">
@@ -171,7 +216,7 @@ export default function PlaceOrderSection({ products }) {
         </OrderDetailsCard>
         <button
           type="button"
-          onClick={handelPlaceOrder}
+          onClick={handlePayment}
           className="text-white bg-custom-darkgreen xlg:py-5 md:py-4 py-3 xlg:text-2xl md:text-xl text-lg"
         >
           Pay ₹
