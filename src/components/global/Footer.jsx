@@ -79,7 +79,7 @@ const Footer = () => {
               wear. Explore our collection and experience quality craftsmanship.
               Your trusted destination for timeless jewellery pieces.
             </p>
-            <div className=" flex items-center gap-5 text-white text-xl ">
+            {/* <div className=" flex items-center gap-5 text-white text-xl ">
               <Link href={"#"}>
                 <FaFacebook />
               </Link>
@@ -92,7 +92,7 @@ const Footer = () => {
               <Link href={"#"}>
                 <FaYoutube />
               </Link>
-            </div>
+            </div> */}
             <div className="flex flex-col gap-2">
               <h1 className=" xlg:text-2xl text-xl font-medium text-white">
                 We Accepted
