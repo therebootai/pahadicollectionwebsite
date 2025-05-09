@@ -85,20 +85,19 @@ export default function PlaceOrderSection({ products }) {
     }
 
     const response = await axiosFetch.post(`/payments/order`, {
-      body: JSON.stringify({
-        amount:
-          Math.round(
-            coupon
-              ? totalPrice + 40 - ((totalPrice + 40) * coupon.discount) / 100
-              : totalPrice + 40
-          ) * 100,
-      }),
+      amount:
+        Math.round(
+          coupon
+            ? totalPrice + 40 - ((totalPrice + 40) * coupon.discount) / 100
+            : totalPrice + 40
+        ) * 100,
     });
 
-    const order = await response.json();
+    const { order } = response.data;
     console.log(order);
+
     const options = {
-      key: "rzp_test_FAMymxk07pExwQ",
+      key: "rzp_test_oVZNqD19ONokkL",
       amount: order.amount,
       currency: "INR",
       name: "Your Shop Name",
@@ -119,13 +118,13 @@ export default function PlaceOrderSection({ products }) {
         color: "#3399cc",
       },
       method: {
-        card: true,
+        credit: true,
+        debit: true,
         upi: true,
+        cod: true,
         netbanking: false,
         wallet: false,
-        paylater: false,
         emi: false,
-        cod: true,
       },
     };
 

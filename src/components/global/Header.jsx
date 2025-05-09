@@ -53,24 +53,24 @@ const Header = () => {
       text: "home",
       href: "/",
     },
-    {
-      text: "Shop",
-      href: "",
-    },
+    // {
+    //   text: "Shop",
+    //   href: "",
+    // },
 
     {
       text: "Products",
 
       href: "/products?page=1",
     },
-    {
-      text: "Blogs",
-      href: "",
-    },
-    {
-      text: "Gallery",
-      href: "",
-    },
+    // {
+    //   text: "Blogs",
+    //   href: "",
+    // },
+    // {
+    //   text: "Gallery",
+    //   href: "",
+    // },
     {
       text: "Contact Us",
       href: "/contact-us",
