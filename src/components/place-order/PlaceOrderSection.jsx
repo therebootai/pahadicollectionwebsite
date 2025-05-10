@@ -61,6 +61,34 @@ export default function PlaceOrderSection({ products }) {
     );
   }, [user]);
 
+  async function handelPlaceOrder() {
+    if (Object.keys(deliveryLocation).length <= 0) {
+      toast.error("You have not add any address.");
+      return;
+    }
+    try {
+      const order = await placeOrder({
+        customerId: user._id,
+        products: orderedProducts.map((product) => ({
+          productId: product._id,
+          quantity: product.quantity,
+        })),
+        totalAmount: totalPrice,
+        delivery_location: deliveryLocation,
+        couponId: coupon ? coupon._id : null,
+      });
+
+      if (order.message) {
+        throw new Error(order.message);
+      }
+      toast.success("Order Placed Successfully");
+      router.push(`/my-orders`);
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  }
+
   // Load Razorpay script dynamically
   const loadRazorpayScript = () => {
     return new Promise((resolve) => {
@@ -116,15 +144,6 @@ export default function PlaceOrderSection({ products }) {
       },
       theme: {
         color: "#3399cc",
-      },
-      method: {
-        credit: true,
-        debit: true,
-        upi: true,
-        cod: true,
-        netbanking: false,
-        wallet: false,
-        emi: false,
       },
     };
 

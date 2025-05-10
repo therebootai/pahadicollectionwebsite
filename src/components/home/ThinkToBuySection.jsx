@@ -64,9 +64,12 @@ const ThinkToBuySection = () => {
                 redefine timeless beauty and customer satisfaction.
               </p>
               <div className=" grid grid-cols-2 lg:gap-6 gap-4 xlg:gap-8 w-full">
-                <button className=" h-[3rem] w-full flex justify-center items-center rounded-sm bg-gradient-to-r from-custom-gold to-custom-darkgold md:text-sm text-base lg:text-lg text-white font-medium">
+                <Link
+                  href={"tel:+919883677736"}
+                  className=" h-[3rem] w-full flex justify-center items-center rounded-sm bg-gradient-to-r from-custom-gold to-custom-darkgold md:text-sm text-base lg:text-lg text-white font-medium"
+                >
                   Arrange a Call
-                </button>
+                </Link>
                 <Link
                   className=" h-[3rem] w-full flex justify-center items-center rounded-sm bg-gradient-to-r from-custom-gold to-custom-darkgold md:text-sm text-base lg:text-lg text-white font-medium"
                   href="/products?page=1"
