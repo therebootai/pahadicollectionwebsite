@@ -12,42 +12,45 @@ const Footer = () => {
   ];
   const pagelinks = [
     {
-      heading: "Resources Link",
-      links: [
-        { text: "Delivery Collections", link: "" },
-        { text: "Shipping Policy", link: "/shipping-policy" },
-        { text: "Check Order", link: "" },
-        { text: "Cancellation & Refund Policy", link: "/refund-policy" },
-        { text: "Order History", link: "" },
-      ],
-    },
-    {
       heading: "Information",
       links: [
-        { text: "Accounts", link: "" },
-        { text: "Order History", link: "" },
-        { text: "Wishlist", link: "" },
-        { text: "Cart", link: "" },
-        { text: "Payments", link: "" },
+        { text: "Accounts", link: "/my-profile" },
+        { text: "Order History", link: "/my-orders" },
+        { text: "Wishlist", link: "/my-interaction/my-wishlist" },
+        { text: "Cart", link: "/my-interaction/my-cart" },
+        { text: "Manage Address", link: "/my-profile/manage-address" },
       ],
     },
     {
       heading: "Our Products",
       links: [
-        { text: "Nose Pins", link: "" },
-        { text: "Pendant", link: "" },
-        { text: "Gold Coin", link: "" },
-        { text: "Earrings", link: "" },
-        { text: "Finger Rings", link: "" },
+        {
+          text: "Wedding Jewelry",
+          link: "products?category=Wedding%20Jewelry",
+        },
+        {
+          text: "Engagement Jewelry",
+          link: "products?category=Engagement%20Jewelry",
+        },
+        {
+          text: "Fashion Jewelry",
+          link: "products?category=Fashion%20Jewelry",
+        },
+        {
+          text: "Valentine Jewelry",
+          link: "products?category=Valentine%20Jewelry",
+        },
+        { text: "Earrings", link: "products?category=Earrings" },
       ],
     },
     {
       heading: "Contact Info",
       links: [
-        { text: "Email With Us", link: "" },
-        { text: "Call With Us", link: "" },
-        { text: "Complain With Us", link: "" },
-        { text: "Live Support", link: "" },
+        { text: "Email With Us", link: "mailto:pahadicollections01@gmail.com" },
+        { text: "Call With Us", link: "tel:+919883677736" },
+        { text: "Complain With Us", link: "tel:+919883677736" },
+        { text: "Shipping Policy", link: "/shipping-policy" },
+        { text: "Cancellation & Refund Policy", link: "/refund-policy" },
       ],
     },
   ];

@@ -55,25 +55,25 @@ const DisscussSection = () => {
     {
       discusson: "Discussion On",
       name: "WhatsApp",
-      href: "#",
+      href: "https://web.whatsapp.com/send?phone=919883677736",
       icons: "/images/discusswhatsapp.svg",
     },
     {
       discusson: "Book An",
       name: "Appointment",
-      href: "#",
+      href: "tel:+919883677736",
       icons: "/images/discussappointment.svg",
     },
     {
       discusson: "Discussion On",
       name: "Phone Call",
-      href: "#",
+      href: "tel:+919883677736",
       icons: "/images/discussphone.svg",
     },
     {
       discusson: "Discussion On",
       name: "Video Meet",
-      href: "#",
+      href: "tel:+919883677736",
       icons: "/images/discussmeet.svg",
     },
   ];
