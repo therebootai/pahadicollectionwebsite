@@ -1,3 +1,5 @@
+"use server";
+
 import axiosFetch from "@/config/axios.config";
 
 export async function placeOrder({
@@ -36,5 +38,16 @@ export async function getOrdersOfUser(customerId) {
   } catch (error) {
     console.log(error);
     return errorresponse.data ?? [];
+  }
+}
+
+export async function updateOrder(orderId, updatedData) {
+  try {
+    const response = await axiosFetch.put(`/orders/${orderId}`, updatedData);
+    const { order } = response.data;
+    return order;
+  } catch (error) {
+    console.log(error);
+    return error.response.data ?? {};
   }
 }

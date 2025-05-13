@@ -123,7 +123,6 @@ export default function PlaceOrderSection({ products }) {
       paymentMode: "ONLINE",
     };
 
-    console.log("order details", orderData);
     const res = await loadRazorpayScript();
 
     if (!res) {
@@ -143,35 +142,30 @@ export default function PlaceOrderSection({ products }) {
     });
 
     const { order, paymentId } = response.data;
-    console.log(order);
-    console.log("payment Id", paymentId);
 
     const options = {
-      key: "rzp_test_oVZNqD19ONokkL",
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
       amount: order.amount,
       currency: "INR",
-      name: "Your Shop Name",
+      name: "Pahadi Collections",
       description: "Order Payment",
       order_id: order.id,
       handler: async (response) => {
         try {
+          console.log("razorpay response", response);
           const paymentDetails = {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_order_id: response.razorpay_order_id,
             razorpay_signature: response.razorpay_signature,
           };
 
-          console.log("payment details", paymentDetails);
-
           const paymentResponse = await axiosFetch.post(
             "/payments/payment-success",
             {
               ...paymentDetails,
-              paymentId: paymentId,
+              paymentId: paymentDetails.razorpay_order_id,
             }
           );
-
-          console.log("payment sucess log", paymentResponse);
 
           if (paymentResponse.data.message === "Payment successful") {
             const orderResult = await placeOrder(orderData);
@@ -289,18 +283,22 @@ export default function PlaceOrderSection({ products }) {
             </div>
           </OrderDetailsCard.Footer>
         </OrderDetailsCard>
-        <button
-          type="button"
-          onClick={handlePayment}
-          className="text-white bg-custom-darkgreen xlg:py-5 md:py-4 py-3 xlg:text-2xl md:text-xl text-lg"
-        >
-          Pay ₹
-          {Math.round(
-            coupon
-              ? totalPrice + 40 - ((totalPrice + 40) * coupon.discount) / 100
-              : totalPrice + 40
-          )}
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={handlePayment}
+            className="text-white bg-custom-darkgreen xlg:py-5 md:py-4 py-3 xlg:text-2xl md:text-xl text-lg flex-1"
+          >
+            Pay Now
+          </button>
+          <button
+            type="button"
+            onClick={handelPlaceOrder}
+            className="text-white bg-custom-green xlg:py-5 md:py-4 py-3 xlg:text-2xl md:text-xl text-lg flex-1"
+          >
+            Order Now
+          </button>
+        </div>
       </div>
     </div>
   );
