@@ -26,7 +26,7 @@ export default function ProductsList({ products, onUpdateQuantity }) {
             </h3>
             <div className="flex items-center justify-start gap-3">
               <p className="bg-[#FFCD91] text-custom-darkgreen py-2 px-4 rounded-2xl xlg:text-xl md:text-lg text-base">
-                ₹{item.price}
+                ₹{Math.round(item.price)}
               </p>
               <span className="text-custom-gray text-sm line-through">
                 ₹{item.mrp}
