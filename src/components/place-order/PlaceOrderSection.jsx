@@ -105,6 +105,25 @@ export default function PlaceOrderSection({ products }) {
   };
 
   const handlePayment = async () => {
+    if (Object.keys(deliveryLocation).length <= 0) {
+      toast.error("You have not added any address.");
+      return;
+    }
+
+    // Prepare order data
+    const orderData = {
+      customerId: user._id,
+      products: orderedProducts.map((product) => ({
+        productId: product._id,
+        quantity: product.quantity,
+      })),
+      totalAmount: totalPrice,
+      delivery_location: deliveryLocation,
+      couponId: coupon ? coupon._id : null,
+      paymentMode: "ONLINE",
+    };
+
+    console.log("order details", orderData);
     const res = await loadRazorpayScript();
 
     if (!res) {
@@ -119,10 +138,13 @@ export default function PlaceOrderSection({ products }) {
             ? totalPrice + 40 - ((totalPrice + 40) * coupon.discount) / 100
             : totalPrice + 40
         ) * 100,
+      customerId: user._id,
+      orderData,
     });
 
-    const { order } = response.data;
+    const { order, paymentId } = response.data;
     console.log(order);
+    console.log("payment Id", paymentId);
 
     const options = {
       key: "rzp_test_oVZNqD19ONokkL",
@@ -131,8 +153,38 @@ export default function PlaceOrderSection({ products }) {
       name: "Your Shop Name",
       description: "Order Payment",
       order_id: order.id,
-      handler: function (response) {
-        toast.success("Payment successful!");
+      handler: async (response) => {
+        try {
+          const paymentDetails = {
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_signature: response.razorpay_signature,
+          };
+
+          console.log("payment details", paymentDetails);
+
+          const paymentResponse = await axiosFetch.post(
+            "/payments/payment-success",
+            {
+              ...paymentDetails,
+              paymentId: paymentId,
+            }
+          );
+
+          console.log("payment sucess log", paymentResponse);
+
+          if (paymentResponse.data.message === "Payment successful") {
+            const orderResult = await placeOrder(orderData);
+            if (orderResult.message) throw new Error(orderResult.message);
+            toast.success("Order placed successfully");
+            router.push(`/my-orders`);
+          } else {
+            toast.error("Payment confirmation failed.");
+          }
+        } catch (error) {
+          console.error("Error processing payment:", error);
+          toast.error(error.message || "Order failed.");
+        }
       },
       prefill: {
         name: user.name,
@@ -143,7 +195,12 @@ export default function PlaceOrderSection({ products }) {
         address: deliveryLocation,
       },
       theme: {
-        color: "#3399cc",
+        color: "#1C5E20",
+      },
+      modal: {
+        ondismiss: () => {
+          toast.error("Payment failed. Order not placed.");
+        },
       },
     };
 
