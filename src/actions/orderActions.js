@@ -51,3 +51,31 @@ export async function updateOrder(orderId, updatedData) {
     return error.response.data ?? {};
   }
 }
+
+export async function createRazorPayOrder(amount, customerId, orderData) {
+  try {
+    const response = await axiosFetch.post(`/payments/order`, {
+      amount,
+      customerId,
+      orderData,
+    });
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data ?? {};
+  }
+}
+
+export async function razorpayOrderSuccess(payment) {
+  try {
+    const response = await axiosFetch.post(
+      "/payments/payment-success",
+      payment
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data ?? {};
+  }
+}
