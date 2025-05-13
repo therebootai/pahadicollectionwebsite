@@ -50,7 +50,7 @@ export default function OrderListsSection() {
             <div className="flex flex-row lg:flex-col gap-4 items-start justify-between">
               <h3 className="text-custom-gray">Payment Status</h3>
               <p className="text-custom-darkgreen">
-                {item.paymentId.paymentMode}
+                {/* {item.paymentId.paymentMode} */}
               </p>
             </div>
             <div className="flex flex-row lg:flex-col gap-4 items-start justify-between">
