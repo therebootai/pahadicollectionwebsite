@@ -123,7 +123,6 @@ export default function PlaceOrderSection({ products }) {
       paymentMode: "ONLINE",
     };
 
-    console.log("order details", orderData);
     const res = await loadRazorpayScript();
 
     if (!res) {
@@ -143,11 +142,9 @@ export default function PlaceOrderSection({ products }) {
     });
 
     const { order, paymentId } = response.data;
-    console.log(order);
-    console.log("payment Id", paymentId);
 
     const options = {
-      key: "rzp_test_oVZNqD19ONokkL",
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
       amount: order.amount,
       currency: "INR",
       name: "Pahadi Collections",
