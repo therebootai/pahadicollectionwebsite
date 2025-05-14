@@ -1,3 +1,4 @@
+"use server";
 import axiosFetch from "@/config/axios.config";
 
 export const fetchSingleProductData = async (slug) => {
