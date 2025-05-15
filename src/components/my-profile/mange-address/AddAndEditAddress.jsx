@@ -72,7 +72,9 @@ export default function AddAndEditAddress({
       user.address = customer.address;
       login(customer);
       setShowAddressForm(false);
-      setEditedAddress(null);
+      if (editedAddress) {
+        setEditedAddress(null);
+      }
       return { ...prevState };
     } catch (error) {
       console.log(error);
@@ -97,11 +99,10 @@ export default function AddAndEditAddress({
         <div className="grid grid-cols-2 gap-6">
           <input
             className="p-6 flex-1 rounded-sm border border-[#ddd] text-custom-gray"
-            placeholder=" House Number"
-            type="number"
+            placeholder="House Number / House Name / Flat Number"
+            type="text"
             name="house_no"
             defaultValue={editedAddress?.house_no || ""}
-            required
           />
           <input
             className="p-6 flex-1 rounded-sm border border-[#ddd] text-custom-gray"
@@ -130,7 +131,13 @@ export default function AddAndEditAddress({
           <input
             className="p-6 flex-1 rounded-sm border border-[#ddd] text-custom-gray"
             placeholder="Pin Code"
-            type="number"
+            type="text"
+            inputMode="numeric"
+            onInput={(e) => {
+              e.target.value = e.target.value.replace(/[^0-9]/g, "");
+            }}
+            minLength={6}
+            maxLength={6}
             name="pincode"
             defaultValue={editedAddress?.pincode || ""}
             required
@@ -184,7 +191,7 @@ export default function AddAndEditAddress({
             type="reset"
             onClick={() => {
               setShowAddressForm(false);
-              setEditedAddress(null);
+              if (editedAddress) setEditedAddress(null);
             }}
             className="text-custom-darkgreen inline-flex py-3 px-5 text-xs bg-[#ddd]"
           >

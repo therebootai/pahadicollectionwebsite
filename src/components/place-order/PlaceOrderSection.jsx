@@ -13,7 +13,6 @@ import {
 import OrderAddressPlace from "./OrderAddressPlace";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import axiosFetch from "@/config/axios.config";
 
 export default function PlaceOrderSection({ products }) {
   const [orderedProducts, setOrderedProducts] = useState(
@@ -125,6 +124,7 @@ export default function PlaceOrderSection({ products }) {
       delivery_location: deliveryLocation,
       couponId: coupon ? coupon._id : null,
       paymentMode: "ONLINE",
+      paymentStatus: "completed",
     };
 
     const res = await loadRazorpayScript();
@@ -144,7 +144,7 @@ export default function PlaceOrderSection({ products }) {
       orderData
     );
 
-    const { order, paymentId } = response;
+    const { order } = response;
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
@@ -211,7 +211,7 @@ export default function PlaceOrderSection({ products }) {
             </h1>
             <OrderAddressPlace
               address={deliveryLocation}
-              name={user.name}
+              user={user}
               setDeliveryLocation={setDeliveryLocation}
               allAddresses={user.address}
             />
