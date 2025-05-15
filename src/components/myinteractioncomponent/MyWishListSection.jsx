@@ -35,7 +35,7 @@ const MyWishListSection = ({ user }) => {
         {user.wishlist.map((item, index) => (
           <div
             key={index}
-            className="xlg:p-6 p-4 flex flex-row gap-4 border border-custom-light-gray hover:shadow-custom-light hover:border-none rounded-sm"
+            className="xlg:p-6 p-4 flex flex-row gap-4 border border-custom-light-gray hover:shadow-custom-light duration-300  rounded-sm"
           >
             <Link
               href={`/products/${item.slug}`}

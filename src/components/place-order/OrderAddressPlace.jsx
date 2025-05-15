@@ -1,15 +1,17 @@
+"use client";
 import Popup from "@/ui/PopUp";
 import ProfileCard from "@/ui/ProfileCard";
-import Link from "next/link";
 import { useState } from "react";
+import AddAndEditAddress from "../my-profile/mange-address/AddAndEditAddress";
 
 export default function OrderAddressPlace({
-  name,
+  user,
   address,
   setDeliveryLocation,
   allAddresses,
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAddressForm, setShowAddressForm] = useState(false);
   return (
     <>
       <ProfileCard>
@@ -19,7 +21,7 @@ export default function OrderAddressPlace({
           </h3>
           <div className="flex flex-col gap-3 flex-1">
             <h1 className="text-custom-darkgreen xlg:text-lg text-base">
-              {name}
+              {user.name}
             </h1>
             <div className="flex gap-2 items-center flex-wrap">
               {Object.entries(address).map(
@@ -75,12 +77,21 @@ export default function OrderAddressPlace({
             )}
           </div>
         ))}
-        <Link
-          href="/my-profile/manage-address"
-          className="text-custom-gold xlg:text-lg text-base inline relative ps-4 underline border-t border-[#ddd]"
-        >
-          Add new Address
-        </Link>
+        {!showAddressForm && (
+          <button
+            type="button"
+            className="text-custom-gold xlg:text-lg text-base relative ps-4 underline border-t border-[#ddd]"
+            onClick={() => setShowAddressForm(!showAddressForm)}
+          >
+            Add new Address
+          </button>
+        )}
+        {showAddressForm && (
+          <AddAndEditAddress
+            setShowAddressForm={() => setShowAddressForm(false)}
+            user={user}
+          />
+        )}
       </Popup>
     </>
   );
