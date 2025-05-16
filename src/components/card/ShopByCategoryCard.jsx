@@ -4,7 +4,7 @@ import React from "react";
 
 const ShopByCategoryCard = ({ categoryimg, catgeoryName, categoryLink }) => {
   return (
-    <div className="flex flex-col rounded hover:shadow-custom-light !h-full">
+    <div className="flex flex-col rounded hover:shadow-custom-light duration-300 !h-full">
       <div className=" relative h-[13rem] md:h-[15rem] w-full ">
         <Image
           src={categoryimg}

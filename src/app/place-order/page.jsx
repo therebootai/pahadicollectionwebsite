@@ -1,3 +1,4 @@
+import { checkTokenAuth } from "@/actions/authActions";
 import { fetchSingleProductData } from "@/actions/FetchSingleProduct";
 import PlaceOrderSection from "@/components/place-order/PlaceOrderSection";
 import MainPageTemplate from "@/templates/MainPageTemplate";
@@ -15,7 +16,7 @@ export default async function PlaceOrder({ searchParams }) {
     redirect("/login");
   }
 
-  const { oderedProducts } = await getPageProps(products);
+  const { oderedProducts, user } = await getPageProps(products);
 
   return (
     <MainPageTemplate
@@ -23,7 +24,7 @@ export default async function PlaceOrder({ searchParams }) {
     >
       <div className="xl:px-16 lg:px-8 px-4 flex flex-col gap-6 my-6">
         <Breadcumb label={"Place Order"} />
-        <PlaceOrderSection products={oderedProducts} />
+        <PlaceOrderSection products={oderedProducts} user={user} />
       </div>
     </MainPageTemplate>
   );
@@ -40,9 +41,10 @@ async function getPageProps(products) {
         oderedProducts.push(product);
       }
     }
-    await Promise.all([fetchAllProducts()]);
+    const [, user] = await Promise.all([fetchAllProducts(), checkTokenAuth()]);
     return {
       oderedProducts,
+      user,
     };
   } catch (error) {
     console.log(error);

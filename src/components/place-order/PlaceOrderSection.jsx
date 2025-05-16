@@ -5,11 +5,14 @@ import OrderDetailsCard from "@/ui/OrderDetailsCard";
 import CouponCheck from "./CouponCheck";
 import { toast } from "react-toastify";
 import { AuthContext } from "@/context/AuthContext";
-import { placeOrder } from "@/actions/orderActions";
+import {
+  createRazorPayOrder,
+  placeOrder,
+  razorpayOrderSuccess,
+} from "@/actions/orderActions";
 import OrderAddressPlace from "./OrderAddressPlace";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import axiosFetch from "@/config/axios.config";
 
 export default function PlaceOrderSection({ products }) {
   const [orderedProducts, setOrderedProducts] = useState(
@@ -121,6 +124,7 @@ export default function PlaceOrderSection({ products }) {
       delivery_location: deliveryLocation,
       couponId: coupon ? coupon._id : null,
       paymentMode: "ONLINE",
+      paymentStatus: "completed",
     };
 
     const res = await loadRazorpayScript();
@@ -130,18 +134,17 @@ export default function PlaceOrderSection({ products }) {
       return;
     }
 
-    const response = await axiosFetch.post(`/payments/order`, {
-      amount:
-        Math.round(
-          coupon
-            ? totalPrice + 40 - ((totalPrice + 40) * coupon.discount) / 100
-            : totalPrice + 40
-        ) * 100,
-      customerId: user._id,
-      orderData,
-    });
+    const response = await createRazorPayOrder(
+      Math.round(
+        coupon
+          ? totalPrice + 40 - ((totalPrice + 40) * coupon.discount) / 100
+          : totalPrice + 40
+      ) * 100,
+      user._id,
+      orderData
+    );
 
-    const { order, paymentId } = response.data;
+    const { order } = response;
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
@@ -152,22 +155,18 @@ export default function PlaceOrderSection({ products }) {
       order_id: order.id,
       handler: async (response) => {
         try {
-          console.log("razorpay response", response);
           const paymentDetails = {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_order_id: response.razorpay_order_id,
             razorpay_signature: response.razorpay_signature,
           };
 
-          const paymentResponse = await axiosFetch.post(
-            "/payments/payment-success",
-            {
-              ...paymentDetails,
-              paymentId: paymentDetails.razorpay_order_id,
-            }
-          );
+          const paymentResponse = await razorpayOrderSuccess({
+            ...paymentDetails,
+            paymentId: paymentDetails.razorpay_order_id,
+          });
 
-          if (paymentResponse.data.message === "Payment successful") {
+          if (paymentResponse.message === "Payment successful") {
             const orderResult = await placeOrder(orderData);
             if (orderResult.message) throw new Error(orderResult.message);
             toast.success("Order placed successfully");
@@ -212,7 +211,7 @@ export default function PlaceOrderSection({ products }) {
             </h1>
             <OrderAddressPlace
               address={deliveryLocation}
-              name={user.name}
+              user={user}
               setDeliveryLocation={setDeliveryLocation}
               allAddresses={user.address}
             />

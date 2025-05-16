@@ -117,7 +117,7 @@ const MyCartListSection = ({ user }) => {
         {cart.map((item, index) => (
           <div
             key={index}
-            className="p-4 md:p-6 flex flex-col md:flex-row gap-4 border border-custom-light-gray hover:shadow-custom-light hover:border-none rounded-sm"
+            className="p-4 md:p-6 flex flex-col md:flex-row gap-4 border border-custom-light-gray hover:shadow-custom-light duration-300  rounded-sm"
           >
             <Link
               href={`/products/${item.productId?.slug}`}
