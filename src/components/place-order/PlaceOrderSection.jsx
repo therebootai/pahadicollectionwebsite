@@ -84,6 +84,7 @@ export default function PlaceOrderSection({ products }) {
       if (order.message) {
         throw new Error(order.message);
       }
+
       toast.success("Order Placed Successfully");
       router.push(`/my-orders`);
     } catch (error) {

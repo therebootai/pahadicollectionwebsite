@@ -22,8 +22,8 @@ export async function placeOrder({
       paymentMode,
     });
     const { data } = response.data;
-    const { order } = data;
-    return order;
+    const { orders } = data;
+    return orders;
   } catch (error) {
     console.log(error);
     return error.response.data ?? {};
