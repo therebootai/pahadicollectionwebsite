@@ -30,8 +30,15 @@ export default function OrderListsSection() {
       const order_message = formData.get("order_message");
       const cancel_reason = formData.get("cancel_reason");
 
+      const canceledOrder = orders.find((item) => item._id === canceledOrderId);
+
+      const updatedStatus =
+        canceledOrder.paymentId.paymentMode === "ONLINE"
+          ? "cancel_initiated_and_refund_generated"
+          : "cancel_initiated";
+
       const order = await updateOrder(canceledOrderId, {
-        status: "canceled",
+        status: updatedStatus,
         cancel_message: {
           order_message,
           cancel_reason,
@@ -106,6 +113,8 @@ export default function OrderListsSection() {
                   </h1>
                   <div className="flex flex-col md:flex-row items-start justify-between md:space-x-4 gap-4">
                     {item.status !== "canceled" &&
+                      item.status !== "cancel_initiated" &&
+                      item.status !== "cancel_initiated_and_refund_generated" &&
                       STATUS_ENUMS.map((step, index) => (
                         <div
                           key={step}
@@ -136,7 +145,10 @@ export default function OrderListsSection() {
                           </p>
                         </div>
                       ))}
-                    {item.status === "canceled" && (
+                    {(item.status === "canceled" ||
+                      item.status === "cancel_initiated" ||
+                      item.status ===
+                        "cancel_initiated_and_refund_generated") && (
                       <>
                         <div className="flex flex-row md:flex-col items-center gap-2">
                           {/* Status Circle */}
@@ -165,7 +177,44 @@ export default function OrderListsSection() {
                           <p
                             className={`md:mt-2 text-sm capitalize text-center text-blue-600 font-semibold tracking-wider`}
                           >
-                            canceled
+                            {item.status.replace(/_/g, " ")}
+                          </p>
+                        </div>
+                      </>
+                    )}
+                    {(item.status === "canceled" ||
+                      item.status === "cancel_initiated" ||
+                      item.status ===
+                        "cancel_initiated_and_refund_generated") && (
+                      <>
+                        <div className="flex flex-row md:flex-col items-center gap-2">
+                          {/* Status Circle */}
+                          <div
+                            className={`w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white`}
+                          >
+                            1
+                          </div>
+
+                          {/* Status Text */}
+                          <p
+                            className={`md:mt-2 text-sm capitalize text-center text-blue-600 font-semibold tracking-wider`}
+                          >
+                            ordered
+                          </p>
+                        </div>
+                        <div className="flex flex-row md:flex-col items-center gap-2">
+                          {/* Status Circle */}
+                          <div
+                            className={`w-8 h-8 flex items-center justify-center rounded-full bg-blue-500 text-white`}
+                          >
+                            2
+                          </div>
+
+                          {/* Status Text */}
+                          <p
+                            className={`md:mt-2 text-sm capitalize text-center text-blue-600 font-semibold tracking-wider`}
+                          >
+                            {item.status.replace(/_/g, " ")}
                           </p>
                         </div>
                       </>
