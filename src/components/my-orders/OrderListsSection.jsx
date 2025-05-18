@@ -115,6 +115,8 @@ export default function OrderListsSection() {
                     {item.status !== "canceled" &&
                       item.status !== "cancel_initiated" &&
                       item.status !== "cancel_initiated_and_refund_generated" &&
+                      item.status !== "canceled_and_refunded" &&
+                      item.status !== "return_and_refunded" &&
                       STATUS_ENUMS.map((step, index) => (
                         <div
                           key={step}
@@ -145,8 +147,7 @@ export default function OrderListsSection() {
                           </p>
                         </div>
                       ))}
-                    {(item.status === "canceled" ||
-                      item.status === "cancel_initiated" ||
+                    {(item.status === "cancel_initiated" ||
                       item.status ===
                         "cancel_initiated_and_refund_generated") && (
                       <>
@@ -184,8 +185,8 @@ export default function OrderListsSection() {
                     )}
                     {(item.status === "canceled" ||
                       item.status === "cancel_initiated" ||
-                      item.status ===
-                        "cancel_initiated_and_refund_generated") && (
+                      item.status === "cancel_initiated_and_refund_generated" ||
+                      item.status === "canceled_and_refunded") && (
                       <>
                         <div className="flex flex-row md:flex-col items-center gap-2">
                           {/* Status Circle */}
