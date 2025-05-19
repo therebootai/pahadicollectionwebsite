@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { AuthContext } from "@/context/AuthContext";
 import {
   createRazorPayOrder,
+  handelRazorpayFailure,
   placeOrder,
   razorpayOrderSuccess,
 } from "@/actions/orderActions";
@@ -168,7 +169,12 @@ export default function PlaceOrderSection({ products }) {
           });
 
           if (paymentResponse.message === "Payment successful") {
-            const orderResult = await placeOrder(orderData);
+            const payments = paymentResponse.data;
+            const orderPlaceData = {
+              ...orderData,
+              ...payments,
+            };
+            const orderResult = await placeOrder(orderPlaceData);
             if (orderResult.message) throw new Error(orderResult.message);
             toast.success("Order placed successfully");
             router.push(`/my-orders`);
@@ -192,7 +198,8 @@ export default function PlaceOrderSection({ products }) {
         color: "#1C5E20",
       },
       modal: {
-        ondismiss: () => {
+        ondismiss: async () => {
+          await handelRazorpayFailure(order.id);
           toast.error("Payment failed. Order not placed.");
         },
       },

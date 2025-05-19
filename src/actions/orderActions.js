@@ -10,6 +10,10 @@ export async function placeOrder({
   couponId,
   paymentStatus = "pending",
   paymentMode = "COD",
+  razorpayPaymentId = "",
+  razorpayOrderId = "",
+  signature = "",
+  captured = false,
 }) {
   try {
     const response = await axiosFetch.post(`/orders/`, {
@@ -20,6 +24,10 @@ export async function placeOrder({
       couponId,
       paymentStatus,
       paymentMode,
+      razorpayPaymentId,
+      razorpayOrderId,
+      signature,
+      captured,
     });
     const { data } = response.data;
     const { orders } = data;
@@ -73,6 +81,16 @@ export async function razorpayOrderSuccess(payment) {
       "/payments/payment-success",
       payment
     );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return error.response.data ?? {};
+  }
+}
+
+export async function handelRazorpayFailure(paymentId) {
+  try {
+    const response = await axiosFetch.delete(`/payments/${paymentId}`);
     return response.data;
   } catch (error) {
     console.log(error);
